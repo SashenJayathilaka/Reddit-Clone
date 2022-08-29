@@ -96,4 +96,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 <hr />
 
-![image](https://user-images.githubusercontent.com/99184393/187246395-1ebb01c1-40cf-4384-b312-d75bd07de0f8.png)
+<a href='https://reddit-clone-plum-one.vercel.app'>![image](https://user-images.githubusercontent.com/99184393/187246395-1ebb01c1-40cf-4384-b312-d75bd07de0f8.png)</a>
+
