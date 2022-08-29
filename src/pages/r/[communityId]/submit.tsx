@@ -8,12 +8,10 @@ import { auth } from "../../../firebase/clientApp";
 import useCommunityData from "../../../hooks/useCommunityData";
 import About from "../../../components/Community/About";
 
-const submit: React.FC = () => {
+const SubmitPostPage: React.FC = () => {
   const [user] = useAuthState(auth);
 
-  //const communityStateValue = useRecoilValue(CommunityState);
   const { communityStateValue } = useCommunityData();
-  //console.log(communityStateValue);
 
   return (
     <div>
@@ -43,4 +41,4 @@ const submit: React.FC = () => {
     </div>
   );
 };
-export default submit;
+export default SubmitPostPage;
