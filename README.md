@@ -1,4 +1,15 @@
-# Reddit Clone with REACT.JS!
+<div align="center">
+
+  <img src="https://user-images.githubusercontent.com/99184393/196572825-73d2a0dc-f96e-45af-884b-77ed7cf20184.png" alt="logo" width="200" height="auto" />
+  
+  <h1>Reddit Clone with REACT.JS</h1>
+  
+  <p>
+   Instagram 2.0 with REACT.JS! (Next.js, Tailwind CSS, Firebase v9, Recoil, Image Uploading, Google Authentication,, Instagram Profile)
+  </p>
+  
+  
+<!-- Badges -->
 
 <a href="https://reddit-clone-plum-one.vercel.app" target="_blank">![](https://img.shields.io/website-up-down-green-red/http/monip.org.svg)</a>
 ![](https://img.shields.io/badge/Maintained-Yes-indigo)
@@ -6,6 +17,37 @@
 ![](https://img.shields.io/github/stars/SashenJayathilaka/Reddit-Clone.svg)
 ![](https://img.shields.io/github/issues/SashenJayathilaka/Reddit-Clone)
 ![](https://img.shields.io/github/last-commit/SashenJayathilaka/Reddit-Clone)
+
+   
+<h4>
+    <a href="https://reddit-clone-plum-one.vercel.app">View Demo</a>
+  <span> · </span>
+    <a href="https://github.com/SashenJayathilaka/Reddit-Clone/blob/master/README.md">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/SashenJayathilaka/Reddit-Clone/issues">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/SashenJayathilaka/Reddit-Clone/issues">Request Feature</a>
+  </h4>
+</div>
+
+<br />
+
+<!-- Table of Contents -->
+## :notebook_with_decorative_cover: Table of Contents
+
+- [About the Project](#star2-about-the-project)
+  * [Screenshots](#camera-screenshots)
+  * [Tech Stack](#space_invader-tech-stack)
+  * [Environment Variables](#key-environment-variables)
+- [Getting Started](#toolbox-getting-started)
+  * [Prerequisites](#bangbang-prerequisites)
+  * [Installation](#gear-installation)
+  * [Run Locally](#running-run-locally)
+  * [Deployment](#triangular_flag_on_post-deployment)
+- [Contact](#handshake-contact)
+
+<!-- About the Project -->
+## :star2: About the Project
 
 <!-- Screenshots -->
 ### :camera: Screenshots
