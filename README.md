@@ -5,7 +5,7 @@
   <h1>Reddit Clone with REACT.JS</h1>
   
   <p>
-   Instagram 2.0 with REACT.JS! (Next.js, Tailwind CSS, Firebase v9, Recoil, Image Uploading, Google Authentication,, Instagram Profile)
+    Reddit Clone with REACTJS (Next.js, Firebase v9, Chakra UI, TypeScript, Recoil)
   </p>
   
   
