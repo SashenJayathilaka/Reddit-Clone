@@ -202,6 +202,12 @@ Clone the project
   git clone https://github.com/SashenJayathilaka/Reddit-Clone.git
 ```
 
+change directory
+
+```bash
+  cd Reddit-Clone
+```
+
 Install dependencies
 
 ```bash
