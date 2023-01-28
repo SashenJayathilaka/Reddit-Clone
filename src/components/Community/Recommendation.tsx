@@ -1,24 +1,26 @@
 import {
+  Box,
+  Button,
   Flex,
+  Icon,
+  Image,
   Skeleton,
   SkeletonCircle,
   Stack,
   Text,
-  Image,
-  Button,
-  Box,
-  Icon,
 } from "@chakra-ui/react";
-import { query, collection, orderBy, limit, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaReddit } from "react-icons/fa";
+
 import { Community } from "../../atoms/CommunitiesAtom";
 import { firestore } from "../../firebase/clientApp";
 import useCommunityData from "../../hooks/useCommunityData";
 
 const Recommendation: React.FC = () => {
   const [communities, setCommunities] = useState<Community[]>([]);
+  const [isViewAll, setIsViewAll] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const { communityStateValue, onJoinOrCommunity } = useCommunityData();
 
@@ -27,15 +29,26 @@ const Recommendation: React.FC = () => {
     try {
       const communityQuery = query(
         collection(firestore, "communities"),
-        orderBy("numberOfMembers", "desc"),
-        limit(5)
+        orderBy("numberOfMembers", "desc")
+        //limit(5)
       );
       const communityDocs = await getDocs(communityQuery);
-      const communities = communityDocs.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Community[];
-      setCommunities(communities);
+
+      if (isViewAll) {
+        const communities = communityDocs.docs
+          .slice(0, communityDocs.docs.length)
+          .map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as Community[];
+        setCommunities(communities);
+      } else {
+        const communities = communityDocs.docs.slice(0, 5).map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Community[];
+        setCommunities(communities);
+      }
     } catch (error) {
       console.log("getCommunityRecommendation", error);
     }
@@ -44,7 +57,7 @@ const Recommendation: React.FC = () => {
 
   useEffect(() => {
     getCommunityRecommendation();
-  }, []);
+  }, [isViewAll]);
 
   return (
     <Flex
@@ -146,8 +159,14 @@ const Recommendation: React.FC = () => {
               );
             })}
             <Box p="10px 20px">
-              <Button height="30px" width="100%">
-                View All
+              <Button
+                height="30px"
+                width="100%"
+                onClick={() =>
+                  isViewAll ? setIsViewAll(false) : setIsViewAll(true)
+                }
+              >
+                {isViewAll ? "Collapse All" : "View All"}
               </Button>
             </Box>
           </>
