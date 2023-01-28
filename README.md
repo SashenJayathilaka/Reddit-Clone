@@ -11,7 +11,7 @@
   
 <!-- Badges -->
 
-<a href="https://reddit-clone-plum-one.vercel.app" target="_blank">![](https://img.shields.io/website-up-down-green-red/http/monip.org.svg)</a>
+<a href="https://reddit-sclone.vercel.app" target="_blank">![](https://img.shields.io/website-up-down-green-red/http/monip.org.svg)</a>
 ![](https://img.shields.io/badge/Maintained-Yes-indigo)
 ![](https://img.shields.io/github/forks/SashenJayathilaka/Reddit-Clone.svg)
 ![](https://img.shields.io/github/stars/SashenJayathilaka/Reddit-Clone.svg)
@@ -20,7 +20,7 @@
 
    
 <h4>
-    <a href="https://reddit-clone-plum-one.vercel.app">View Demo</a>
+    <a href="https://reddit-sclone.vercel.app">View Demo</a>
   <span> · </span>
     <a href="https://github.com/SashenJayathilaka/Reddit-Clone/blob/master/README.md">Documentation</a>
   <span> · </span>
@@ -53,10 +53,10 @@
 ### :camera: Screenshots
 
 <div align="center">
-<a href="https://reddit-clone-plum-one.vercel.app"><img width='800rem' src='https://user-images.githubusercontent.com/99184393/187256587-06a2002d-12d6-41da-8f57-b10a81a3f45f.png' alt='image'/></a>
+<a href="https://reddit-sclone.vercel.app"><img width='800rem' src='https://user-images.githubusercontent.com/99184393/187256587-06a2002d-12d6-41da-8f57-b10a81a3f45f.png' alt='image'/></a>
 </div>
 
-## <a href="https://reddit-clone-plum-one.vercel.app" target="_blank">LIVE DEMO 💥</a>
+## <a href="https://reddit-sclone.vercel.app" target="_blank">LIVE DEMO 💥</a>
 
 ![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
 ![forthebadge](https://forthebadge.com/images/badges/for-you.svg)
@@ -170,7 +170,8 @@ Provider Setup
 After installing Chakra UI, you need to set up the ``ChakraProvider`` at the root of your application.
 
 Go to ``pages/_app.js`` or ``pages/_app.tsx`` (create it if it doesn't exist) and wrap the ``Component`` with the ``ChakraProvider``:
-```
+
+```tsx
 // pages/_app.js
 import { ChakraProvider } from '@chakra-ui/react'
 
