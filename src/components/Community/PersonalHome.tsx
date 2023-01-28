@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
 import { FaReddit } from "react-icons/fa";
 
+import CreateCommunityModel from "../Modal/CreateCommunity/CreateCommunityModel";
+
 const PersonalHome: React.FC = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <Flex
       direction="column"
@@ -13,6 +17,7 @@ const PersonalHome: React.FC = () => {
       borderColor="gray.300"
       position="sticky"
     >
+      <CreateCommunityModel open={open} handleClose={() => setOpen(false)} />
       <Flex
         align="flex-end"
         color="white"
@@ -34,7 +39,13 @@ const PersonalHome: React.FC = () => {
             Your personal Reddit frontpage, built for you.
           </Text>
           <Button height="30px">Create Post</Button>
-          <Button variant="outline" height="30px">
+          <Button
+            variant="outline"
+            height="30px"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
             Create Community
           </Button>
         </Stack>
