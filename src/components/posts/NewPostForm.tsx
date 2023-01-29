@@ -6,6 +6,7 @@ import {
   Flex,
   Icon,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import {
@@ -21,6 +22,7 @@ import React, { useState } from "react";
 import { BiPoll } from "react-icons/bi";
 import { BsLink45Deg, BsMic } from "react-icons/bs";
 import { IoDocumentText, IoImageOutline } from "react-icons/io5";
+
 import { Post } from "../../atoms/PostAtom";
 import { firestore, storage } from "../../firebase/clientApp";
 import useSelectFile from "../../hooks/useSelectFile";
@@ -75,6 +77,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
   const { selectedFile, setSelectedFile, onSelectedFile } = useSelectFile();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const bg = useColorModeValue("white", "#1A202C");
 
   const handleCreatePost = async () => {
     const { communityId } = router.query;
@@ -140,7 +143,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
   };
 
   return (
-    <Flex direction="column" bg="white" borderRadius={4} mt={2}>
+    <Flex direction="column" bg={bg} borderRadius={4} mt={2}>
       <Flex width="100%">
         {formTabs.map((item) => (
           <TabItem

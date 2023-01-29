@@ -1,19 +1,23 @@
+import { Flex, Image, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
-import { Flex, Image } from "@chakra-ui/react";
-import SearchInput from "./SearchInput";
-import RightContent from "./RightContent/RightContent";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/clientApp";
-import Directory from "./Directory/Directory";
-import useDirectory from "../hooks/useDirectory";
+
 import { defaultMenuItem } from "../atoms/directoryMenuAtom";
+import { auth } from "../firebase/clientApp";
+import useDirectory from "../hooks/useDirectory";
+import Directory from "./Directory/Directory";
+import RightContent from "./RightContent/RightContent";
+import SearchInput from "./SearchInput";
 
 const Navbar: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
   const { onSelectMenuItem } = useDirectory();
+  const { colorMode } = useColorMode();
+  const bg = useColorModeValue("white", "blackAlpha.800");
+
   return (
     <Flex
-      bg="white"
+      bg={bg}
       height="44px"
       padding="6px 12px"
       justify={{ md: "space-between" }}
@@ -27,7 +31,11 @@ const Navbar: React.FC = () => {
       >
         <Image src="/images/redditFace.svg" height="30px" />
         <Image
-          src="/images/redditText.svg"
+          src={
+            colorMode === "light"
+              ? "/images/redditText.svg"
+              : "/images/Reddit-Word-Dark.svg"
+          }
           height="46px"
           display={{ base: "none", md: "unset" }}
         />

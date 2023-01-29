@@ -1,20 +1,22 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Flex,
+  Icon,
+  Image,
   Menu,
   MenuButton,
   MenuList,
-  Icon,
   Text,
-  Image,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { TiHome } from "react-icons/ti";
+
 import useDirectory from "../../hooks/useDirectory";
 import Communities from "./Communities";
 
 const Directory: React.FC = () => {
   const { directoryState, toggleMenuOpen } = useDirectory();
+  const iconColor = useColorModeValue("black", "white");
 
   return (
     <Menu isOpen={directoryState.isOpen}>
@@ -41,12 +43,23 @@ const Directory: React.FC = () => {
                 mr={2}
               />
             ) : (
-              <Icon
-                fontSize={24}
-                mr={{ base: 1, md: 2 }}
-                as={directoryState.selectedMenuItem.icon}
-                color={directoryState.selectedMenuItem.iconColor}
-              />
+              <>
+                {directoryState.selectedMenuItem.iconColor === "black" ? (
+                  <Icon
+                    fontSize={24}
+                    mr={{ base: 1, md: 2 }}
+                    as={directoryState.selectedMenuItem.icon}
+                    color={iconColor}
+                  />
+                ) : (
+                  <Icon
+                    fontSize={24}
+                    mr={{ base: 1, md: 2 }}
+                    as={directoryState.selectedMenuItem.icon}
+                    color={directoryState.selectedMenuItem.iconColor}
+                  />
+                )}
+              </>
             )}
 
             <Flex display={{ base: "none", lg: "flex" }}>

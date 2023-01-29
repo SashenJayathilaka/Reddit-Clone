@@ -18,7 +18,6 @@
 ![](https://img.shields.io/github/issues/SashenJayathilaka/Reddit-Clone)
 ![](https://img.shields.io/github/last-commit/SashenJayathilaka/Reddit-Clone)
 
-   
 <h4>
     <a href="https://reddit-sclone.vercel.app">View Demo</a>
   <span> · </span>
@@ -33,23 +32,26 @@
 <br />
 
 <!-- Table of Contents -->
+
 ## :notebook_with_decorative_cover: Table of Contents
 
 - [About the Project](#star2-about-the-project)
-  * [Screenshots](#camera-screenshots)
-  * [Tech Stack](#space_invader-tech-stack)
-  * [Environment Variables](#key-environment-variables)
+  - [Screenshots](#camera-screenshots)
+  - [Tech Stack](#space_invader-tech-stack)
+  - [Environment Variables](#key-environment-variables)
 - [Getting Started](#toolbox-getting-started)
-  * [Prerequisites](#bangbang-prerequisites)
-  * [Installation](#gear-installation)
-  * [Run Locally](#running-run-locally)
-  * [Deployment](#triangular_flag_on_post-deployment)
+  - [Prerequisites](#bangbang-prerequisites)
+  - [Installation](#gear-installation)
+  - [Run Locally](#running-run-locally)
+  - [Deployment](#triangular_flag_on_post-deployment)
 - [Contact](#handshake-contact)
 
 <!-- About the Project -->
+
 ## :star2: About the Project
 
 <!-- Screenshots -->
+
 ### :camera: Screenshots
 
 <div align="center">
@@ -113,12 +115,15 @@
     </tr>
 </table>
 
-## 	:toolbox: Getting Started
+## :toolbox: Getting Started
+
 ### :bangbang: Prerequisites
+
 - Sign up for a Firebase account <a href='https://firebase.google.com'>HERE</a>
 - Install Node JS in your computer <a href='https://nodejs.org/en/'>HERE</a>
 
 <!-- Env Variables -->
+
 ### :key: Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
@@ -145,9 +150,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ![](https://img.shields.io/badge/next.js-20232A?style=for-the-badge&logo=next.js&logoColor=61DAFB)
 
 Install my-project with npm
+
 ```
 npx create-next-app@latest --ts my-project
 ```
+
 ```
 cd my-project
 ```
@@ -159,7 +166,9 @@ Install dependencies
 ![](https://img.shields.io/badge/UI-Chakra%20UI-green)
 
 #### Installation
+
 In your Next.js project, install Chakra UI by running either of the following:
+
 ```
 npm i @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^6
 or
@@ -167,23 +176,23 @@ yarn add @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^
 ```
 
 Provider Setup
-After installing Chakra UI, you need to set up the ``ChakraProvider`` at the root of your application.
+After installing Chakra UI, you need to set up the `ChakraProvider` at the root of your application.
 
-Go to ``pages/_app.js`` or ``pages/_app.tsx`` (create it if it doesn't exist) and wrap the ``Component`` with the ``ChakraProvider``:
+Go to `pages/_app.js` or `pages/_app.tsx` (create it if it doesn't exist) and wrap the `Component` with the `ChakraProvider`:
 
 ```tsx
 // pages/_app.js
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
       <Component {...pageProps} />
     </ChakraProvider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;
 ```
 
 <a href="https://chakra-ui.com/getting-started/nextjs-guide" target="_blank">🔷 Customizing theme & More</a>
@@ -193,6 +202,7 @@ Install dependencies
 <a href="https://github.com/SashenJayathilaka/Reddit-Clone/blob/master/package.json" target="_blank">🔶 Dependency Info</a>
 
 <!-- Run Locally -->
+
 ### :running: Run Locally
 
 ![](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
@@ -214,6 +224,7 @@ Install dependencies
 ```bash
   npm install
 ```
+
 Start the server
 
 ```bash
@@ -244,6 +255,7 @@ To learn more about Next.js, take a look at the following resources:
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 <!-- Deployment -->
+
 ### :triangular_flag_on_post: Deployment
 
 To deploy this project run

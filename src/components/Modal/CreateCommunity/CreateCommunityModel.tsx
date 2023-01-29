@@ -14,6 +14,7 @@ import {
   ModalOverlay,
   Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import {
   doc,
@@ -47,6 +48,8 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { toggleMenuOpen } = useDirectory();
+  const bg = useColorModeValue("gray.100", "#1A202C");
+  const textColor = useColorModeValue("gray.500", "gray.400");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 21) return;
@@ -109,6 +112,8 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
 
       handleClose();
       toggleMenuOpen();
+      setCommunityType("");
+      setCommunities("");
       router.push(`r/${CommunitiesName}`);
     } catch (error: any) {
       console.log("HandleCreateCommunity Error", error);
@@ -139,7 +144,7 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
               <Text fontWeight={600} fontSize={15}>
                 Name
               </Text>
-              <Text fontSize={11} color="gray.500">
+              <Text fontSize={11} color={textColor}>
                 Community Names including capitalization cannot be changed
               </Text>
               <Text
@@ -160,7 +165,7 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
               />
               <Text
                 fontSize="9pt"
-                color={charsRemaining === 0 ? "red" : "gray.500"}
+                color={charsRemaining === 0 ? "red" : textColor}
               >
                 {charsRemaining} Characters Remaining
               </Text>
@@ -178,11 +183,11 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
                     onChange={onCommunityTypeChange}
                   >
                     <Flex align="center">
-                      <Icon as={BsFillPersonFill} color="gray.500" mr={2} />
+                      <Icon as={BsFillPersonFill} color={textColor} mr={2} />
                       <Text fontSize="10pt" mr={1}>
                         Public
                       </Text>
-                      <Text fontSize="8pt" color="gray.500" pt={1}>
+                      <Text fontSize="8pt" color={textColor} pt={1}>
                         Anyone can view, post and comment to this community
                       </Text>
                     </Flex>
@@ -193,11 +198,11 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
                     onChange={onCommunityTypeChange}
                   >
                     <Flex align="center">
-                      <Icon as={BsFillEyeFill} color="gray.500" mr={2} />
+                      <Icon as={BsFillEyeFill} color={textColor} mr={2} />
                       <Text fontSize="10pt" mr={1}>
                         Restricted
                       </Text>
-                      <Text fontSize="8pt" color="gray.500" pt={1}>
+                      <Text fontSize="8pt" color={textColor} pt={1}>
                         Anyone can view this community, but only approved users
                       </Text>
                     </Flex>
@@ -208,11 +213,11 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
                     onChange={onCommunityTypeChange}
                   >
                     <Flex align="center">
-                      <Icon as={HiLockClosed} color="gray.500" mr={2} />
+                      <Icon as={HiLockClosed} color={textColor} mr={2} />
                       <Text fontSize="10pt" mr={1}>
                         Private
                       </Text>
-                      <Text fontSize="8pt" color="gray.500" pt={1}>
+                      <Text fontSize="8pt" color={textColor} pt={1}>
                         Only approved users can view and submit to this
                         community
                       </Text>
@@ -223,7 +228,7 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
             </ModalBody>
           </Box>
 
-          <ModalFooter bg="gray.100" borderRadius="0px 0px 10px 10px">
+          <ModalFooter bg={bg} borderRadius="0px 0px 10px 10px">
             <Button
               variant="outline"
               height="30px"

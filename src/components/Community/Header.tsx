@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 import { Community } from "../../atoms/CommunitiesAtom";
 import { FaReddit } from "react-icons/fa";
@@ -9,6 +17,7 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ communityData }) => {
+  const bg = useColorModeValue("white", "#1A202C");
   const { communityStateValue, onJoinOrCommunity, loading } =
     useCommunityData();
   const isJoined = !!communityStateValue.mySnippets.find(
@@ -18,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
   return (
     <Flex direction="column" width="100%" height="146px">
       <Box height="50%" bg="blue.400" />
-      <Flex justifyContent="center" bg="white" height="50%">
+      <Flex justifyContent="center" bg={bg} height="50%">
         <Flex width="95%" maxWidth="860px">
           {communityStateValue.currentCommunity?.imageURL ? (
             <Image

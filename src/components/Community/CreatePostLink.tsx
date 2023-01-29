@@ -1,4 +1,4 @@
-import { Flex, Icon, Input } from "@chakra-ui/react";
+import { Flex, Icon, Input, useColorModeValue } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -6,6 +6,7 @@ import { BsLink45Deg } from "react-icons/bs";
 import { FaReddit } from "react-icons/fa";
 import { IoImageOutline } from "react-icons/io5";
 import { useSetRecoilState } from "recoil";
+
 import { authModelState } from "../../atoms/authModalAtom";
 import { auth } from "../../firebase/clientApp";
 import useDirectory from "../../hooks/useDirectory";
@@ -15,6 +16,11 @@ const CreatePostLink: React.FC = () => {
   const [user] = useAuthState(auth);
   const { toggleMenuOpen } = useDirectory();
   const setAuthModelState = useSetRecoilState(authModelState);
+  const bg = useColorModeValue("white", "#1A202C");
+  const borderColor = useColorModeValue("gray.300", "#2D3748");
+  const searchBg = useColorModeValue("gray.50", "#2D3748");
+  const searchBorder = useColorModeValue("gray.200", "#4A5568");
+
   const onClick = () => {
     if (!user) {
       setAuthModelState({ open: true, view: "login" });
@@ -42,11 +48,11 @@ const CreatePostLink: React.FC = () => {
     <Flex
       justify="space-evenly"
       align="center"
-      bg="white"
+      bg={bg}
       height="56px"
       borderRadius={4}
       border="1px solid"
-      borderColor="gray.300"
+      borderColor={borderColor}
       p={2}
       mb={4}
     >
@@ -56,18 +62,18 @@ const CreatePostLink: React.FC = () => {
         fontSize="10pt"
         _placeholder={{ color: "gray.500" }}
         _hover={{
-          bg: "white",
+          bg: bg,
           border: "1px solid",
           borderColor: "blue.500",
         }}
         _focus={{
           outline: "none",
-          bg: "white",
+          bg: bg,
           border: "1px solid",
           borderColor: "blue.500",
         }}
-        bg="gray.50"
-        borderColor="gray.200"
+        bg={searchBg}
+        borderColor={searchBorder}
         height="36px"
         borderRadius={4}
         mr={4}

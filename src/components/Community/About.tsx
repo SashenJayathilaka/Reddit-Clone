@@ -1,27 +1,29 @@
 import {
   Box,
-  Flex,
-  Text,
-  Icon,
-  Stack,
-  Divider,
   Button,
+  Divider,
+  Flex,
+  Icon,
   Image,
   Spinner,
+  Stack,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
-import { Community, CommunityState } from "../../atoms/CommunitiesAtom";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { RiCakeLine } from "react-icons/ri";
+import { doc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import moment from "moment";
 import Link from "next/link";
-import { auth, firestore, storage } from "../../firebase/clientApp";
+import React, { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import useSelectFile from "../../hooks/useSelectFile";
 import { FaReddit } from "react-icons/fa";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import { updateDoc, doc } from "firebase/firestore";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { RiCakeLine } from "react-icons/ri";
 import { useSetRecoilState } from "recoil";
+
+import { Community, CommunityState } from "../../atoms/CommunitiesAtom";
+import { auth, firestore, storage } from "../../firebase/clientApp";
+import useSelectFile from "../../hooks/useSelectFile";
 
 type AboutProps = {
   communityData: Community;
@@ -33,6 +35,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
   const { selectedFile, setSelectedFile, onSelectedFile } = useSelectFile();
   const [uploadingImage, setUploadingImage] = useState(false);
   const setCommunityStateValue = useSetRecoilState(CommunityState);
+  const bg = useColorModeValue("white", "#1A202C");
 
   const onUploadingImage = async () => {
     if (!selectedFile) return;
@@ -74,7 +77,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
         </Text>
         <Icon as={HiOutlineDotsHorizontal} cursor="pointer" />
       </Flex>
-      <Flex direction="column" p={3} bg="white" borderRadius="0px 0px 4px 4px">
+      <Flex direction="column" p={3} bg={bg} borderRadius="0px 0px 4px 4px">
         <Stack>
           <Flex width="100%" p={2} fontSize="10pt" fontWeight={700}>
             <Flex direction="column" flexGrow={1}>

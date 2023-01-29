@@ -1,7 +1,8 @@
-import { Input, Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Input, Text, useColorModeValue } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
+
 import { authModelState } from "../../../atoms/authModalAtom";
 import { auth } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
@@ -14,6 +15,10 @@ const Login: React.FC<LoginProps> = () => {
     email: "",
     password: "",
   });
+  const searchBorder = useColorModeValue("blue.500", "#4A5568");
+  const inputBg = useColorModeValue("gray.50", "#4A5568");
+  const focusedInputBg = useColorModeValue("white", "#2D3748");
+  const placeholderColor = useColorModeValue("gray.500", "#CBD5E0");
 
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
@@ -41,19 +46,19 @@ const Login: React.FC<LoginProps> = () => {
         mb={2}
         onChange={onChange}
         fontSize="10pt"
-        _placeholder={{ color: "gray.500" }}
+        _placeholder={{ color: placeholderColor }}
         _hover={{
-          bg: "white",
+          bg: focusedInputBg,
           border: "1px solid",
-          borderColor: "blue.500",
+          borderColor: searchBorder,
         }}
         _focus={{
           outline: "none",
-          bg: "white",
+          bg: focusedInputBg,
           border: "1px solid",
-          borderColor: "blue.500",
+          borderColor: searchBorder,
         }}
-        bg="gray.50"
+        bg={inputBg}
       />
       <Input
         required
@@ -63,19 +68,19 @@ const Login: React.FC<LoginProps> = () => {
         mb={2}
         onChange={onChange}
         fontSize="10pt"
-        _placeholder={{ color: "gray.500" }}
+        _placeholder={{ color: placeholderColor }}
         _hover={{
-          bg: "white",
+          bg: focusedInputBg,
           border: "1px solid",
-          borderColor: "blue.500",
+          borderColor: searchBorder,
         }}
         _focus={{
           outline: "none",
-          bg: "white",
+          bg: focusedInputBg,
           border: "1px solid",
-          borderColor: "blue.500",
+          borderColor: searchBorder,
         }}
-        bg="gray.50"
+        bg={inputBg}
       />
       <Text textAlign="center" color="red" fontSize="10pt">
         {FIREBASE_ERRORS[error?.message as keyof typeof FIREBASE_ERRORS]}

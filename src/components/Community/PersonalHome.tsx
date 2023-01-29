@@ -1,20 +1,29 @@
 import React, { useState } from "react";
-import { Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Icon,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { FaReddit } from "react-icons/fa";
 
 import CreateCommunityModel from "../Modal/CreateCommunity/CreateCommunityModel";
 
 const PersonalHome: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const bg = useColorModeValue("white", "#1A202C");
+  const borderColor = useColorModeValue("gray.300", "#2D3748");
 
   return (
     <Flex
       direction="column"
-      bg="white"
+      bg={bg}
       borderRadius={4}
       cursor="pointer"
       border="1px solid"
-      borderColor="gray.300"
+      borderColor={borderColor}
       position="sticky"
     >
       <CreateCommunityModel open={open} handleClose={() => setOpen(false)} />
