@@ -162,21 +162,15 @@ const Recommendation: React.FC = () => {
               );
             })}
             <Box p="10px 20px">
-              {communities.length > 5 ? (
-                <Button
-                  height="30px"
-                  width="100%"
-                  onClick={() =>
-                    isViewAll ? setIsViewAll(false) : setIsViewAll(true)
-                  }
-                >
-                  {isViewAll ? "Collapse Items" : "View All"}
-                </Button>
-              ) : (
-                <Button height="30px" width="100%">
-                  {isViewAll ? "Collapse Items" : "View All"}
-                </Button>
-              )}
+              <Button
+                height="30px"
+                width="100%"
+                onClick={() =>
+                  isViewAll ? setIsViewAll(false) : setIsViewAll(true)
+                }
+              >
+                {isViewAll ? "Collapse Items" : "View All"}
+              </Button>
             </Box>
           </>
         )}
