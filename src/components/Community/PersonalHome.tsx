@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Button,
   Flex,
@@ -7,11 +6,15 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { FaReddit } from "react-icons/fa";
 
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/clientApp";
 import CreateCommunityModel from "../Modal/CreateCommunity/CreateCommunityModel";
 
 const PersonalHome: React.FC = () => {
+  const [user] = useAuthState(auth);
   const [open, setOpen] = useState(false);
   const bg = useColorModeValue("white", "#1A202C");
   const borderColor = useColorModeValue("gray.300", "#2D3748");
@@ -49,6 +52,7 @@ const PersonalHome: React.FC = () => {
           </Text>
           <Button height="30px">Create Post</Button>
           <Button
+            disabled={!user}
             variant="outline"
             height="30px"
             onClick={() => {
