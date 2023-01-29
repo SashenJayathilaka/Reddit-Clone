@@ -48,8 +48,8 @@ const Home: NextPage = () => {
 
         const postQuery = query(
           collection(firestore, "posts"),
-          where("communityId", "in", myCommunityIds)
-          //limit(10)
+          where("communityId", "in", myCommunityIds),
+          limit(10)
         );
 
         const postDoc = await getDocs(postQuery);

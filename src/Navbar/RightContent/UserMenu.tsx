@@ -1,25 +1,27 @@
-import React from "react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
+  Flex,
+  Icon,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
-  Icon,
-  Flex,
   MenuDivider,
+  MenuItem,
+  MenuList,
+  Switch,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import { signOut, User } from "firebase/auth";
-import { FaRedditSquare } from "react-icons/fa";
-import { VscAccount } from "react-icons/vsc";
+import React from "react";
 import { CgProfile } from "react-icons/cg";
+import { FaRedditSquare } from "react-icons/fa";
 import { MdOutlineLogin } from "react-icons/md";
-import { auth } from "../../firebase/clientApp";
-import { useResetRecoilState, useSetRecoilState } from "recoil";
-import { authModelState } from "../../atoms/authModalAtom";
+import { VscAccount } from "react-icons/vsc";
+
 import { IoSparkles } from "react-icons/io5";
-import { CommunityState } from "../../atoms/CommunitiesAtom";
+import { useSetRecoilState } from "recoil";
+import { authModelState } from "../../atoms/authModalAtom";
+import { auth } from "../../firebase/clientApp";
 
 type UserMenuProps = {
   user?: User | null;
@@ -27,6 +29,7 @@ type UserMenuProps = {
 
 const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
   const setAuthModalState = useSetRecoilState(authModelState);
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const logout = async () => {
     await signOut(auth);
@@ -73,9 +76,19 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
           <ChevronDownIcon />
         </Flex>
       </MenuButton>
-      <MenuList>
+      <MenuList mt={2}>
+        <MenuItem fontSize="10pt" fontWeight="700" closeOnSelect={false}>
+          <Flex gap={2} align="center">
+            <Switch
+              isChecked={colorMode === "dark" ? true : false}
+              onChange={toggleColorMode}
+            />
+            <Text>Dark Mode</Text>
+          </Flex>
+        </MenuItem>
         {user ? (
           <>
+            <MenuDivider />
             <MenuItem
               fontSize="10px"
               fontWeight={700}

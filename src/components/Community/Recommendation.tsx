@@ -8,6 +8,7 @@ import {
   SkeletonCircle,
   Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
@@ -23,6 +24,8 @@ const Recommendation: React.FC = () => {
   const [isViewAll, setIsViewAll] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const { communityStateValue, onJoinOrCommunity } = useCommunityData();
+  const bg = useColorModeValue("white", "#1A202C");
+  const borderColor = useColorModeValue("gray.300", "#2D3748");
 
   const getCommunityRecommendation = async () => {
     setLoading(true);
@@ -62,11 +65,11 @@ const Recommendation: React.FC = () => {
   return (
     <Flex
       direction="column"
-      bg="white"
+      bg={bg}
       borderRadius={4}
       cursor="pointer"
       border="1px solid"
-      borderColor="gray.300"
+      borderColor={borderColor}
     >
       <Flex
         align="flex-end"
@@ -112,7 +115,7 @@ const Recommendation: React.FC = () => {
                     align="center"
                     fontSize="10pt"
                     borderBottom="1px solid"
-                    borderColor="gray.200"
+                    borderColor={borderColor}
                     p="10px 12px"
                     fontWeight={600}
                   >
@@ -159,15 +162,21 @@ const Recommendation: React.FC = () => {
               );
             })}
             <Box p="10px 20px">
-              <Button
-                height="30px"
-                width="100%"
-                onClick={() =>
-                  isViewAll ? setIsViewAll(false) : setIsViewAll(true)
-                }
-              >
-                {isViewAll ? "Collapse All" : "View All"}
-              </Button>
+              {communities.length > 5 ? (
+                <Button
+                  height="30px"
+                  width="100%"
+                  onClick={() =>
+                    isViewAll ? setIsViewAll(false) : setIsViewAll(true)
+                  }
+                >
+                  {isViewAll ? "Collapse Items" : "View All"}
+                </Button>
+              ) : (
+                <Button height="30px" width="100%">
+                  {isViewAll ? "Collapse Items" : "View All"}
+                </Button>
+              )}
             </Box>
           </>
         )}

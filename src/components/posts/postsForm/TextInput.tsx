@@ -1,4 +1,11 @@
-import { Button, Flex, Input, Stack, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Input,
+  Stack,
+  Textarea,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 
 type TextInputProps = {
@@ -19,6 +26,9 @@ const TextInput: React.FC<TextInputProps> = ({
   handleCreatePost,
   loading,
 }) => {
+  const searchBg = useColorModeValue("white", "#2D3748");
+  const searchBorder = useColorModeValue("black", "#A0AEC0");
+
   return (
     <Stack spacing={3} width="100%">
       <Input
@@ -31,9 +41,9 @@ const TextInput: React.FC<TextInputProps> = ({
         _placeholder={{ color: "gray.500" }}
         _focus={{
           outline: "none",
-          bg: "white",
+          bg: searchBg,
           border: "1px solid",
-          borderColor: "black",
+          borderColor: searchBorder,
         }}
       />
       <Textarea
@@ -47,9 +57,9 @@ const TextInput: React.FC<TextInputProps> = ({
         _placeholder={{ color: "gray.500" }}
         _focus={{
           outline: "none",
-          bg: "white",
+          bg: searchBg,
           border: "1px solid",
-          borderColor: "black",
+          borderColor: searchBorder,
         }}
       />
       <Flex justify="flex-end">

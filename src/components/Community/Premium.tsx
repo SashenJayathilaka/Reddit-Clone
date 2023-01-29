@@ -1,17 +1,27 @@
 import React from "react";
-import { Flex, Icon, Text, Stack, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Icon,
+  Text,
+  Stack,
+  Button,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { GiCheckedShield } from "react-icons/gi";
 
 const Premium: React.FC = () => {
+  const bg = useColorModeValue("white", "#1A202C");
+  const borderColor = useColorModeValue("gray.300", "#2D3748");
+
   return (
     <Flex
       direction="column"
-      bg="white"
+      bg={bg}
       borderRadius={4}
       cursor="pointer"
       p="12px"
       border="1px solid"
-      borderColor="gray.300"
+      borderColor={borderColor}
     >
       <Flex mb={2}>
         <Icon as={GiCheckedShield} fontSize={26} color="brand.100" mt={2} />

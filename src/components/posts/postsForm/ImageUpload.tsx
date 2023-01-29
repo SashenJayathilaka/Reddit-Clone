@@ -1,4 +1,10 @@
-import { Button, Flex, Image, Stack } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Image,
+  Stack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React, { useRef } from "react";
 
 type ImageUploadProps = {
@@ -15,6 +21,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   setSelectedFile,
 }) => {
   const selectedFileRef = useRef<HTMLInputElement>(null);
+  const searchBorder = useColorModeValue("gray.200", "#718096");
 
   return (
     <Flex direction="column" justify="center" align="center" width="100%">
@@ -40,7 +47,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           align="center"
           p={20}
           border="1px dashed"
-          borderColor="gray.200"
+          borderColor={searchBorder}
           width="100%"
           borderRadius={4}
         >

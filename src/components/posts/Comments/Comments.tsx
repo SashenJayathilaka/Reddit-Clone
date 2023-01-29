@@ -5,6 +5,7 @@ import {
   SkeletonText,
   Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import {
@@ -21,6 +22,7 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
+
 import { Post, postState } from "../../../atoms/PostAtom";
 import { firestore } from "../../../firebase/clientApp";
 import CommentInput from "./CommentInput";
@@ -43,6 +45,8 @@ const Comments: React.FC<CommentsProps> = ({
   const [fetchLoading, setFetchLoading] = useState(true);
   const [createLoading, setCreateLoading] = useState(false);
   const setPostState = useSetRecoilState(postState);
+  const bg = useColorModeValue("white", "#1A202C");
+  const lineBorderColor = useColorModeValue("gray.100", "#171923");
 
   //console.log(comments);
 
@@ -149,7 +153,7 @@ const Comments: React.FC<CommentsProps> = ({
   }, [selectedPost]);
 
   return (
-    <Box bg="white" borderRadius="0px 0px 4px 4px" p={2}>
+    <Box bg={bg} borderRadius="0px 0px 4px 4px" p={2}>
       <Flex
         direction="column"
         pl={10}
@@ -172,7 +176,7 @@ const Comments: React.FC<CommentsProps> = ({
         {fetchLoading ? (
           <>
             {[0, 1, 2].map((item) => (
-              <Box key={item} padding="6" bg="white">
+              <Box key={item} padding="6" bg={bg}>
                 <SkeletonCircle size="10" />
                 <SkeletonText mt="4" noOfLines={2} spacing="4" />
               </Box>
@@ -186,7 +190,7 @@ const Comments: React.FC<CommentsProps> = ({
                 justify="center"
                 align="center"
                 borderTop="1px solid"
-                borderColor="gray.100"
+                borderColor={lineBorderColor}
                 p={20}
               >
                 <Text fontWeight={700} opacity={0.3}>

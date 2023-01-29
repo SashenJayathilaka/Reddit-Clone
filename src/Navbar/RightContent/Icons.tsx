@@ -6,9 +6,11 @@ import {
 } from "react-icons/io5";
 import { GrAdd } from "react-icons/gr";
 import { BsArrowUpRightCircle, BsChatDots } from "react-icons/bs";
-import { Flex, Icon } from "@chakra-ui/react";
+import { Flex, Icon, useColorModeValue } from "@chakra-ui/react";
 
 const Icons: React.FC = () => {
+  const hoverBg = useColorModeValue("gray.200", "#2A4365");
+
   return (
     <Flex>
       <Flex
@@ -23,7 +25,7 @@ const Icons: React.FC = () => {
           padding={1}
           cursor="pointer"
           borderRadius={4}
-          _hover={{ bg: "gray.200" }}
+          _hover={{ bg: hoverBg }}
         >
           <Icon as={BsArrowUpRightCircle} fontSize={20} />
         </Flex>
@@ -33,7 +35,7 @@ const Icons: React.FC = () => {
           padding={1}
           cursor="pointer"
           borderRadius={4}
-          _hover={{ bg: "gray.200" }}
+          _hover={{ bg: hoverBg }}
         >
           <Icon as={IoFilterCircleOutline} fontSize={22} />
         </Flex>
@@ -43,7 +45,7 @@ const Icons: React.FC = () => {
           padding={1}
           cursor="pointer"
           borderRadius={4}
-          _hover={{ bg: "gray.200" }}
+          _hover={{ bg: hoverBg }}
         >
           <Icon as={IoVideocamOutline} fontSize={22} />
         </Flex>
@@ -55,7 +57,7 @@ const Icons: React.FC = () => {
           padding={1}
           cursor="pointer"
           borderRadius={4}
-          _hover={{ bg: "gray.200" }}
+          _hover={{ bg: hoverBg }}
         >
           <Icon as={BsChatDots} fontSize={20} />
         </Flex>
@@ -65,7 +67,7 @@ const Icons: React.FC = () => {
           padding={1}
           cursor="pointer"
           borderRadius={4}
-          _hover={{ bg: "gray.200" }}
+          _hover={{ bg: hoverBg }}
         >
           <Icon as={IoNotificationsOutline} fontSize={20} />
         </Flex>
@@ -76,7 +78,7 @@ const Icons: React.FC = () => {
           padding={1}
           cursor="pointer"
           borderRadius={4}
-          _hover={{ bg: "gray.200" }}
+          _hover={{ bg: hoverBg }}
         >
           <Icon as={GrAdd} fontSize={20} />
         </Flex>
