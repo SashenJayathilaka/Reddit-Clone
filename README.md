@@ -55,7 +55,8 @@
 ### :camera: Screenshots
 
 <div align="center">
-<a href="https://reddit-sclone.vercel.app"><img width='800rem' src='https://user-images.githubusercontent.com/99184393/187256587-06a2002d-12d6-41da-8f57-b10a81a3f45f.png' alt='image'/></a>
+<a href="https://reddit-sclone.vercel.app"><img width='800rem' src='./demo/ezgif-5-bba0183ff4.gif' alt='image'/></a>
+<a href="https://reddit-sclone.vercel.app"><img width='800rem' src='./demo/ezgif-5-d29f199523.gif' alt='image'/></a>
 </div>
 
 ## <a href="https://reddit-sclone.vercel.app" target="_blank">LIVE DEMO 💥</a>
