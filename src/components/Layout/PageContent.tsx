@@ -1,4 +1,5 @@
 import { Flex } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 
 type PageContentProps = {
@@ -6,9 +7,16 @@ type PageContentProps = {
 };
 
 const PageContent: React.FC<PageContentProps> = ({ children }) => {
+  const router = useRouter();
+  const uid = router.query;
+
   return (
     <Flex justify="center" p="16px 0px">
-      <Flex width="95%" justify="center" maxWidth="860px">
+      <Flex
+        width="95%"
+        justify="center"
+        maxWidth={uid.uid ? "1160px" : "860px"}
+      >
         {/* Left */}
         <Flex
           direction="column"

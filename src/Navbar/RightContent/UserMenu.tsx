@@ -18,6 +18,7 @@ import { FaRedditSquare } from "react-icons/fa";
 import { MdOutlineLogin } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
 
+import { useRouter } from "next/router";
 import { IoSparkles } from "react-icons/io5";
 import { useSetRecoilState } from "recoil";
 import { authModelState } from "../../atoms/authModalAtom";
@@ -28,8 +29,20 @@ type UserMenuProps = {
 };
 
 const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
+  const router = useRouter();
   const setAuthModalState = useSetRecoilState(authModelState);
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const handelNavigatePage = () => {
+    if (user) {
+      router.push({
+        pathname: `/profile/${user?.uid}`,
+        query: {
+          uid: user?.uid.toString(),
+        },
+      });
+    }
+  };
 
   const logout = async () => {
     await signOut(auth);
@@ -94,7 +107,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
               fontWeight={700}
               _hover={{ bg: "blue.500", color: "white" }}
             >
-              <Flex align="center">
+              <Flex align="center" onClick={handelNavigatePage}>
                 <Icon fontSize={20} mr={2} as={CgProfile} />
                 Profile
               </Flex>
