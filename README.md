@@ -5,7 +5,7 @@
   <h1>Reddit Clone with REACT.JS</h1>
   
   <p>
-    Reddit Clone with REACTJS (Next.js, Firebase v9, Chakra UI, TypeScript, Recoil)
+ Reddit Clone with REACTJS (Next.js, Firebase v9, Chakra UI, TypeScript, Recoil, (Image Uploading, Google Authentication, create community, join community, leave community, upvote and downvote posts), Dark Mode & Light Mode)
   </p>
   
   
