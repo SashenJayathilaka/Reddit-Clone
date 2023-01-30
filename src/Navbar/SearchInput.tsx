@@ -1,13 +1,14 @@
-import { SearchIcon } from "@chakra-ui/icons";
+import React from "react";
 import {
   Flex,
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
 import { User } from "firebase/auth";
-import React from "react";
 
 type SearchInputProps = {
   user?: User | null;
