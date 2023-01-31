@@ -5,7 +5,7 @@
   <h1>Reddit Clone with REACT.JS</h1>
   
   <p>
- Reddit Clone with REACTJS (Next.js, Firebase v9, Chakra UI, TypeScript, Recoil, (Image Uploading, Google Authentication, create community, join community, leave community, upvote and downvote posts), Dark Mode & Light Mode)
+ Reddit Clone with REACTJS (Next.js, Firebase v9, Chakra UI, TypeScript, Recoil, (Image Uploading, Google Authentication, Create Community, Join Community, Leave Community, Upvote and Downvote Posts), Dark Mode & Light Mode)
   </p>
   
   
@@ -54,9 +54,22 @@
 
 ### :camera: Screenshots
 
+- Create Community, Join Community, Leave Community, Upvote and Downvote Posts
+
 <div align="center">
 <a href="https://reddit-sclone.vercel.app"><img width='800rem' src='./demo/ezgif-5-bba0183ff4.gif' alt='image'/></a>
+</div>
+
+- Dark Mode & Light Mode
+  
+<div align="center">
 <a href="https://reddit-sclone.vercel.app"><img width='800rem' src='./demo/ezgif-5-d29f199523.gif' alt='image'/></a>
+</div>
+  
+- User Profile Section
+  
+<div align="center">
+<a href="https://reddit-sclone.vercel.app"><img width='800rem' src='./demo/ezgif-4-c9902f3c2a.gif' alt='image'/></a>
 </div>
 
 ## <a href="https://reddit-sclone.vercel.app" target="_blank">LIVE DEMO 💥</a>
@@ -274,3 +287,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 Sashen - [@twitter_handle](https://twitter.com/SashenHasinduJ) - sashenjayathilaka95@gmail.com
 
 Project Link: [https://github.com/SashenJayathilaka/Reddit-Clone.git](https://github.com/SashenJayathilaka/Reddit-Clone.git)
+
+<hr />
