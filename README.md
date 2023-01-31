@@ -60,11 +60,15 @@
 <a href="https://reddit-sclone.vercel.app"><img width='800rem' src='./demo/ezgif-5-bba0183ff4.gif' alt='image'/></a>
 </div>
 
+<br />
+
 - Dark Mode & Light Mode
   
 <div align="center">
 <a href="https://reddit-sclone.vercel.app"><img width='800rem' src='./demo/ezgif-5-d29f199523.gif' alt='image'/></a>
 </div>
+
+<br />
   
 - User Profile Section
   
