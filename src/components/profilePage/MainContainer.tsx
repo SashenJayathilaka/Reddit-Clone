@@ -175,7 +175,7 @@ function MainContainer({}: Props) {
         )}
       </>
       <Stack spacing={5}>
-        <ProfileSide />
+        {user && <ProfileSide />}
         <Recommendation />
       </Stack>
     </PageContent>
