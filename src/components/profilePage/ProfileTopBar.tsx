@@ -1,6 +1,6 @@
 import { Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import { BsCalendar4Week } from "react-icons/bs";
-import { FaGhost } from "react-icons/fa";
+import { FaHotjar } from "react-icons/fa";
 import { GoGraph } from "react-icons/go";
 import { MdVerified } from "react-icons/md";
 
@@ -48,8 +48,8 @@ function ProfileTopBar({}: Props) {
         _hover={{ bg: hoverBg }}
         display={{ base: "none", md: "flex" }}
       >
-        <Icon as={FaGhost} fontSize={20} />
-        <Text>Host</Text>
+        <Icon as={FaHotjar} fontSize={20} />
+        <Text>Hot</Text>
       </Flex>
       <Flex
         mr={1.5}
