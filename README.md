@@ -63,7 +63,7 @@
 <br />
 
 - Dark Mode & Light Mode
-  
+
 <div align="center">
 <a href="https://reddit-sclone.vercel.app"><img width='800rem' src='./demo/ezgif-5-d29f199523.gif' alt='image'/></a>
 </div>
@@ -77,6 +77,11 @@
 </div>
 
 ## <a href="https://reddit-sclone.vercel.app" target="_blank">LIVE DEMO 💥</a>
+
+#### 🔴 Open the camera app on your device and scan the code below (live demo)
+
+<a href="https://reddit-sclone.vercel.app"><img src="./demo/qr/qr-code.png" alt="qr" width="200" height="200" /></a>
+<a href="#instagram"><img src="https://user-images.githubusercontent.com/99184393/182557606-b36f2540-1260-42bf-b547-ed5832e3615e.png" alt="qr" width="200" height="200" /></a>
 
 ![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
 ![forthebadge](https://forthebadge.com/images/badges/for-you.svg)
