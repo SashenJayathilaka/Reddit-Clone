@@ -10,10 +10,11 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import CryptoJS from "crypto-js";
 import moment from "moment";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsChat, BsDot } from "react-icons/bs";
 import { FaReddit } from "react-icons/fa";
@@ -27,6 +28,8 @@ import {
 } from "react-icons/io5";
 
 import { Post } from "../../atoms/PostAtom";
+
+// const secretPass = process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS;
 
 type PostItemProps = {
   post: Post;
@@ -55,8 +58,12 @@ const PostItem: React.FC<PostItemProps> = ({
   const [loadingImage, setLoadingImage] = useState(true);
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [error, setError] = useState(false);
+  const [decryptedDataTittle, setDecryptedDataTittle] = useState("");
+  const [decryptedDataBody, setDecryptedDataBody] = useState("");
   const singlePostPage = !onSelectPost;
   const router = useRouter();
+
+  // Thames
   const bg = useColorModeValue("white", "#1A202C");
   const borderColor = useColorModeValue("gray.300", "#2D3748");
   const singlePageBorderColor = useColorModeValue("white", "#2D3748");
@@ -87,6 +94,34 @@ const PostItem: React.FC<PostItemProps> = ({
     }
     setLoadingDelete(false);
   };
+
+  useEffect(() => {
+    try {
+      // Decrypt Tittle
+      if (post.title) {
+        const bytes = CryptoJS.AES.decrypt(
+          post.title,
+          process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
+        );
+        const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+        setDecryptedDataTittle(data);
+      } else return;
+
+      // Decrypt Body
+      if (post.body) {
+        const secondBytes = CryptoJS.AES.decrypt(
+          post.body,
+          process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
+        );
+        const secondData = JSON.parse(secondBytes.toString(CryptoJS.enc.Utf8));
+
+        setDecryptedDataBody(secondData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [post]);
 
   return (
     <Flex
@@ -168,9 +203,9 @@ const PostItem: React.FC<PostItemProps> = ({
             </Text>
           </Stack>
           <Text fontSize="12pt" fontWeight={600}>
-            {post.title}
+            {decryptedDataTittle}
           </Text>
-          <Text fontSize="10pt">{post.body}</Text>
+          <Text fontSize="10pt">{decryptedDataBody}</Text>
           {post.imageURL && (
             <Flex justify="center" align="center" p={2}>
               {loadingImage && (
