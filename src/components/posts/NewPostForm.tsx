@@ -1,13 +1,12 @@
 import {
   Alert,
-  AlertDescription,
   AlertIcon,
-  AlertTitle,
   Flex,
   Icon,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import CryptoJS from "crypto-js";
 import { User } from "firebase/auth";
 import {
   addDoc,
@@ -29,6 +28,8 @@ import useSelectFile from "../../hooks/useSelectFile";
 import ImageUpload from "./postsForm/ImageUpload";
 import TextInput from "./postsForm/TextInput";
 import TabItem from "./TabItem";
+
+// const secretPass = process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS;
 
 type NewPostFormProps = {
   user: User;
@@ -73,6 +74,10 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
     title: "",
     body: "",
   });
+  const [encryptedData, setEncryptedData] = useState({
+    title: "",
+    body: "",
+  });
   //const [selectedFile, setSelectedFile] = useState<string>();
   const { selectedFile, setSelectedFile, onSelectedFile } = useSelectFile();
   const [loading, setLoading] = useState(false);
@@ -82,13 +87,14 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
   const handleCreatePost = async () => {
     const { communityId } = router.query;
     // create new post
+
     const newPost: Post = {
       communityId: communityId as string,
       creatorId: user.uid,
       communityImageURL: communityImageURL || "",
       creatorDisplayName: user.email!.split("@")[0],
-      title: textInput.title,
-      body: textInput.body,
+      title: encryptedData.title,
+      body: encryptedData.body,
       numberOfComments: 0,
       voteStatus: 0,
       createdAt: serverTimestamp() as Timestamp,
@@ -130,12 +136,30 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
     };
   };
 */
+
+  const encryptData = (name: string, value: string) => {
+    try {
+      const data = CryptoJS.AES.encrypt(
+        JSON.stringify(value),
+        process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
+      ).toString();
+
+      setEncryptedData((prev) => ({
+        ...prev,
+        [name]: data,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onTextChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const {
       target: { name, value },
     } = event;
+    encryptData(name, value);
     setTextInput((prev) => ({
       ...prev,
       [name]: value,
