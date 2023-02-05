@@ -7,6 +7,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import CryptoJS from "crypto-js";
 import { User } from "firebase/auth";
 import {
   collection,
@@ -40,6 +41,7 @@ const Comments: React.FC<CommentsProps> = ({
   communityId,
 }) => {
   const [commentText, setCommentText] = useState("");
+  const [encryptedData, setEncryptedData] = useState("");
   const [comments, setComments] = useState<Comment[]>([]);
   const [loadingDeleteId, setLoadingDeleteId] = useState("");
   const [fetchLoading, setFetchLoading] = useState(true);
@@ -53,6 +55,14 @@ const Comments: React.FC<CommentsProps> = ({
   const onCreateComments = async () => {
     try {
       setCreateLoading(true);
+
+      const splitName = user.email!.split("@")[0];
+
+      const dataName = CryptoJS.AES.encrypt(
+        JSON.stringify(splitName),
+        process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
+      ).toString();
+
       const batch = writeBatch(firestore);
 
       const commentDocRef = doc(collection(firestore, "comments"));
@@ -60,12 +70,12 @@ const Comments: React.FC<CommentsProps> = ({
       const newComment: Comment = {
         id: commentDocRef.id,
         creatorId: user.uid,
-        creatorDisplayText: user.email!.split("@")[0],
+        creatorDisplayText: dataName,
         creatorPhotoURL: user.photoURL!,
         communityId,
         postId: selectedPost?.id!,
         postTitle: selectedPost?.title!,
-        text: commentText,
+        text: encryptedData,
         createdAt: serverTimestamp() as Timestamp,
       };
 
@@ -151,6 +161,19 @@ const Comments: React.FC<CommentsProps> = ({
     if (!selectedPost) return;
     getPostComments();
   }, [selectedPost]);
+
+  useEffect(() => {
+    try {
+      const data = CryptoJS.AES.encrypt(
+        JSON.stringify(commentText),
+        process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
+      ).toString();
+
+      setEncryptedData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [commentText]);
 
   return (
     <Box bg={bg} borderRadius="0px 0px 4px 4px" p={2}>

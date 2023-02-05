@@ -88,11 +88,18 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
     const { communityId } = router.query;
     // create new post
 
+    const splitName = user.email!.split("@")[0];
+
+    const dataName = CryptoJS.AES.encrypt(
+      JSON.stringify(splitName),
+      process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
+    ).toString();
+
     const newPost: Post = {
       communityId: communityId as string,
       creatorId: user.uid,
       communityImageURL: communityImageURL || "",
-      creatorDisplayName: user.email!.split("@")[0],
+      creatorDisplayName: dataName,
       title: encryptedData.title,
       body: encryptedData.body,
       numberOfComments: 0,
@@ -109,8 +116,13 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
         await uploadString(imageRef, selectedFile, "data_url");
         const downloadURL = await getDownloadURL(imageRef);
 
+        const encryptDownloadURL = CryptoJS.AES.encrypt(
+          JSON.stringify(downloadURL),
+          process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
+        ).toString();
+
         await updateDoc(postDocRef, {
-          imageURL: downloadURL,
+          imageURL: encryptDownloadURL,
         });
       }
       router.back();

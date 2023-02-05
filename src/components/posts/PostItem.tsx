@@ -58,8 +58,12 @@ const PostItem: React.FC<PostItemProps> = ({
   const [loadingImage, setLoadingImage] = useState(true);
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [error, setError] = useState(false);
-  const [decryptedDataTittle, setDecryptedDataTittle] = useState("");
-  const [decryptedDataBody, setDecryptedDataBody] = useState("");
+  const [decryptedData, setDecryptedData] = useState({
+    title: "",
+    body: "",
+    creatorDisplayName: "",
+    imageURL: "",
+  });
   const singlePostPage = !onSelectPost;
   const router = useRouter();
 
@@ -96,27 +100,23 @@ const PostItem: React.FC<PostItemProps> = ({
   };
 
   useEffect(() => {
+    const arr = [post.title, post.body, post.creatorDisplayName, post.imageURL];
+    const arrName = ["title", "body", "creatorDisplayName", "imageURL"];
+
     try {
-      // Decrypt Tittle
-      if (post.title) {
-        const bytes = CryptoJS.AES.decrypt(
-          post.title,
-          process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
-        );
-        const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index]) {
+          const bytes = CryptoJS.AES.decrypt(
+            arr[index]!,
+            process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
+          );
+          const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
-        setDecryptedDataTittle(data);
-      } else return;
-
-      // Decrypt Body
-      if (post.body) {
-        const secondBytes = CryptoJS.AES.decrypt(
-          post.body,
-          process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
-        );
-        const secondData = JSON.parse(secondBytes.toString(CryptoJS.enc.Utf8));
-
-        setDecryptedDataBody(secondData);
+          setDecryptedData((prev) => ({
+            ...prev,
+            [arrName[index]]: data,
+          }));
+        } else return;
       }
     } catch (error) {
       console.log(error);
@@ -198,21 +198,21 @@ const PostItem: React.FC<PostItemProps> = ({
               </>
             )}
             <Text>
-              Posted by u/{post.creatorDisplayName}{" "}
+              Posted by u/{decryptedData.creatorDisplayName}{" "}
               {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
             </Text>
           </Stack>
           <Text fontSize="12pt" fontWeight={600}>
-            {decryptedDataTittle}
+            {decryptedData.title}
           </Text>
-          <Text fontSize="10pt">{decryptedDataBody}</Text>
+          <Text fontSize="10pt">{decryptedData.body}</Text>
           {post.imageURL && (
             <Flex justify="center" align="center" p={2}>
               {loadingImage && (
                 <Skeleton height="200px" width="100%" borderRadius={4} />
               )}
               <Image
-                src={post.imageURL}
+                src={decryptedData.imageURL}
                 maxHeight="460px"
                 alt="Post Image"
                 display={loadingImage ? "none" : "unset"}

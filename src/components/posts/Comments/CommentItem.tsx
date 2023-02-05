@@ -1,12 +1,13 @@
 import { Box, Flex, Icon, Spinner, Stack, Text } from "@chakra-ui/react";
+import CryptoJS from "crypto-js";
 import { Timestamp } from "firebase/firestore";
-import React from "react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { FaReddit } from "react-icons/fa";
 import {
   IoArrowDownCircleOutline,
   IoArrowUpCircleOutline,
 } from "react-icons/io5";
-import { FaReddit } from "react-icons/fa";
-import moment from "moment";
 
 export type Comment = {
   id?: string;
@@ -33,6 +34,35 @@ const CommentItem: React.FC<CommentItemProps> = ({
   isLoading,
   userId,
 }) => {
+  const [decryptedData, setDecryptedData] = useState({
+    text: "",
+    creatorDisplayText: "",
+  });
+
+  useEffect(() => {
+    const arr = [comment.text, comment.creatorDisplayText];
+    const arrName = ["text", "creatorDisplayText"];
+
+    try {
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index]) {
+          const bytes = CryptoJS.AES.decrypt(
+            arr[index]!,
+            process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS as string
+          );
+          const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+          setDecryptedData((prev) => ({
+            ...prev,
+            [arrName[index]]: data,
+          }));
+        } else return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [comment]);
+
   return (
     <Flex>
       <Box mr={2}>
@@ -40,13 +70,13 @@ const CommentItem: React.FC<CommentItemProps> = ({
       </Box>
       <Stack spacing={1}>
         <Stack direction="row" align="center" fontSize="8px">
-          <Text>{comment.creatorDisplayText}</Text>
+          <Text>{decryptedData.creatorDisplayText}</Text>
           <Text>
             {moment(new Date(comment.createdAt?.seconds * 1000)).fromNow()}
           </Text>
           {isLoading && <Spinner size="sm" />}
         </Stack>
-        <Text fontSize="10pt">{comment.text}</Text>
+        <Text fontSize="10pt">{decryptedData.text}</Text>
         <Stack direction="row" align="center" cursor="pointer" color="gray.500">
           <Icon as={IoArrowUpCircleOutline} />
           <Icon as={IoArrowDownCircleOutline} />
