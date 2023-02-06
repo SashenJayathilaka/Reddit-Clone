@@ -48,7 +48,7 @@ function Messages({ conversationId }: Props) {
           setMessageDetails(chat);
         }
       ),
-    [firestore]
+    [firestore, conversationId]
   );
 
   useEffect(() => {
