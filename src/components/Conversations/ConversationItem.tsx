@@ -8,7 +8,13 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import CryptoJS from "crypto-js";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { motion } from "framer-motion";
 import moment from "moment";
 import { useRouter } from "next/router";
@@ -23,10 +29,9 @@ import { MessageBody } from "../Feed/Messages";
 
 type Props = {
   user: Community;
-  lastSeenMessage: MessageBody[];
 };
 
-function ConversationItem({ user, lastSeenMessage }: Props) {
+function ConversationItem({ user }: Props) {
   const [userCommunities, SetUserCommunities] = useState<Community>();
   const [decryptMessage, setDecryptedMessage] = useState("");
   const [lastSeenMessages, setLastSeenMessages] = useState<MessageBody[]>([]);
@@ -55,35 +60,30 @@ function ConversationItem({ user, lastSeenMessage }: Props) {
     } else return;
   };
 
-  const fetchLastSeenMessage = async (communities: any) => {
-    try {
-      if (!user && !communities) return;
-
-      const chatUserQuery = query(
-        collection(firestore, `communities/${communities}/conversation`),
-        orderBy("sendedAt", "desc")
-      );
-
-      const chatUserDoc = await getDocs(chatUserQuery);
-
-      const chat = chatUserDoc.docs.map((doc: any) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      setLastSeenMessages(chat);
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
+  useEffect(
+    () =>
+      onSnapshot(
+        query(
+          collection(
+            firestore,
+            `communities/${userCommunities?.id}/conversation`
+          ),
+          orderBy("sendedAt", "desc")
+        ),
+        (snapshot) => {
+          const chat = snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setLastSeenMessages(chat);
+        }
+      ),
+    [firestore]
+  );
 
   useEffect(() => {
     getChatUser(user.id);
   }, [user, firestore]);
-
-  useEffect(() => {
-    fetchLastSeenMessage(userCommunities?.id);
-  }, [userCommunities?.id, lastSeenMessage.length]);
 
   useEffect(() => {
     const decryptArr = [];
@@ -102,7 +102,7 @@ function ConversationItem({ user, lastSeenMessage }: Props) {
     } catch (error: any) {
       console.log(error.message);
     }
-  }, [userCommunities?.id, lastSeenMessage.length, lastSeenMessages]);
+  }, [userCommunities?.id, lastSeenMessages]);
 
   return (
     <motion.div

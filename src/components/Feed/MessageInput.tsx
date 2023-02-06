@@ -1,4 +1,4 @@
-import { Box, Icon, Input, useColorModeValue } from "@chakra-ui/react";
+import { Box, Input, useColorModeValue } from "@chakra-ui/react";
 import CryptoJS from "crypto-js";
 import {
   addDoc,
@@ -8,7 +8,6 @@ import {
 } from "firebase/firestore";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { BsEmojiSmile } from "react-icons/bs";
 
 import { auth, firestore } from "../../firebase/clientApp";
 
@@ -24,10 +23,9 @@ interface MessageBody {
 
 type Props = {
   conversationId: string;
-  setTimestamp: any;
 };
 
-function MessageInput({ conversationId, setTimestamp }: Props) {
+function MessageInput({ conversationId }: Props) {
   const [user] = useAuthState(auth);
   const [messageBody, setMessageBody] = useState("");
   const searchBg = useColorModeValue("gray.50", "whiteAlpha.50");
@@ -79,13 +77,10 @@ function MessageInput({ conversationId, setTimestamp }: Props) {
       );
 
       setMessageBody("");
-      setTimestamp(serverTimestamp() as Timestamp);
     } catch (error: any) {
       console.log(error.message);
     }
   };
-
-  const encryptData = () => {};
 
   return (
     <Box px={4} py={6} width="100">
