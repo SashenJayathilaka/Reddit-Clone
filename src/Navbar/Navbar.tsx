@@ -15,6 +15,43 @@ const Navbar: React.FC = () => {
   const { colorMode } = useColorMode();
   const bg = useColorModeValue("white", "blackAlpha.800");
 
+  /* const [userCreates, setUserCreate] = useState<boolean>(false); */
+
+  /*   const getUserData = async () => {
+    if (user) {
+      try {
+        const docRef = doc(firestore, "chatUsers", user?.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          console.log("User Already Created");
+          setUserCreate(false);
+        } else {
+          setUserCreate(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else return;
+  };
+
+  const userCreate = async (session: any) => {
+    const userDocRef = doc(firestore, "chatUsers", session?.uid);
+    await setDoc(userDocRef, JSON.parse(JSON.stringify(session)));
+
+    await updateDoc(userDocRef, {
+      updatedAt: serverTimestamp() as Timestamp,
+    });
+  };
+
+  useEffect(() => {
+    getUserData();
+
+    if (userCreates) {
+      userCreate(user);
+    } else return;
+  }, [user, firestore, userCreates]); */
+
   return (
     <Flex
       bg={bg}
