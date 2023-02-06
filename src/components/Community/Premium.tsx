@@ -1,12 +1,12 @@
-import React from "react";
 import {
+  Button,
   Flex,
   Icon,
-  Text,
   Stack,
-  Button,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import React from "react";
 import { GiCheckedShield } from "react-icons/gi";
 
 const Premium: React.FC = () => {

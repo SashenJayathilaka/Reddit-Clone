@@ -1,10 +1,10 @@
 import {
   Box,
   Flex,
-  Stack,
-  useColorModeValue,
   Image,
+  Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { collection, getDocs, query, Timestamp } from "firebase/firestore";
 import { useRouter } from "next/router";
@@ -14,7 +14,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Community } from "../../atoms/CommunitiesAtom";
 import { auth, firestore } from "../../firebase/clientApp";
 import SkeletonLoader from "../common/SkeletonLoader";
-import { MessageBody } from "../Feed/Messages";
 import ConversationsList from "./ConversationsList";
 
 export interface ChatUser {
@@ -34,11 +33,9 @@ export interface ChatUser {
   updatedAt: Timestamp;
 }
 
-type Props = {
-  lastSeenMessage: MessageBody[];
-};
+type Props = {};
 
-function ConversationsWrapper({ lastSeenMessage }: Props) {
+function ConversationsWrapper({}: Props) {
   const router = useRouter();
   const {
     query: { userInCommunities },
@@ -47,7 +44,7 @@ function ConversationsWrapper({ lastSeenMessage }: Props) {
   const [chatUsers, setChatUser] = useState<Community[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const bg = useColorModeValue("whiteAlpha.500", "whiteAlpha.50");
+  const bg = useColorModeValue("whiteAlpha.500", "whiteAlpha.100");
 
   const getChatUser = async (userId: any) => {
     if (userId) {
@@ -80,7 +77,7 @@ function ConversationsWrapper({ lastSeenMessage }: Props) {
   return (
     <Box
       width={{ base: "100%", md: "430px" }}
-      bg="whiteAlpha.50"
+      bg={bg}
       flexDirection="column"
       gap={4}
       py={6}
@@ -91,11 +88,8 @@ function ConversationsWrapper({ lastSeenMessage }: Props) {
         <SkeletonLoader count={10} height="80px" width="370px" />
       ) : (
         <>
-          {chatUsers ? (
-            <ConversationsList
-              chatUsers={chatUsers}
-              lastSeenMessage={lastSeenMessage}
-            />
+          {chatUsers.length > 0 ? (
+            <ConversationsList chatUsers={chatUsers} />
           ) : (
             <Flex justify="center" pt="50px">
               <Stack spacing={5}>

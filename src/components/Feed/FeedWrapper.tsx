@@ -8,11 +8,9 @@ import Messages from "./Messages";
 import MessagesHeader from "./MessagesHeader";
 import NoConversationSelected from "./NoConversationSelected";
 
-type Props = {
-  setLastSeenMessage: any;
-};
+type Props = {};
 
-function FeedWrapper({ setLastSeenMessage }: Props) {
+function FeedWrapper({}: Props) {
   const router = useRouter();
   const {
     query: { userInCommunities, member },
@@ -37,16 +35,9 @@ function FeedWrapper({ setLastSeenMessage }: Props) {
               conversationId={userInCommunities.toString()}
               member={member?.toString()}
             />
-            <Messages
-              conversationId={userInCommunities.toString()}
-              timestamp={timestamp as Timestamp}
-              setLastSeenMessage={setLastSeenMessage}
-            />
+            <Messages conversationId={userInCommunities.toString()} />
           </Flex>
-          <MessageInput
-            conversationId={userInCommunities.toString()}
-            setTimestamp={setTimestamp}
-          />
+          <MessageInput conversationId={userInCommunities.toString()} />
         </>
       ) : (
         <NoConversationSelected />

@@ -1,7 +1,7 @@
 import { Flex, Stack } from "@chakra-ui/react";
 import {
   collection,
-  getDocs,
+  onSnapshot,
   orderBy,
   query,
   Timestamp,
@@ -26,40 +26,30 @@ export interface MessageBody {
 
 type Props = {
   conversationId: string;
-  timestamp: Timestamp;
-  setLastSeenMessage: any;
 };
 
-function Messages({ conversationId, timestamp, setLastSeenMessage }: Props) {
+function Messages({ conversationId }: Props) {
   const [user] = useAuthState(auth);
   const [messageDetails, setMessageDetails] = useState<MessageBody[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchMessages = async (conversationId: string) => {
-    if (!conversationId && !user) return;
-
-    try {
-      const chatUserQuery = query(
-        collection(firestore, `communities/${conversationId}/conversation`),
-        orderBy("sendedAt", "desc")
-      );
-      const chatUserDoc = await getDocs(chatUserQuery);
-
-      const chat = chatUserDoc.docs.map((doc: any) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      setMessageDetails(chat);
-      setLastSeenMessage(chat);
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchMessages(conversationId);
-  }, [conversationId, firestore, timestamp]);
+  useEffect(
+    () =>
+      onSnapshot(
+        query(
+          collection(firestore, `communities/${conversationId}/conversation`),
+          orderBy("sendedAt", "desc")
+        ),
+        (snapshot) => {
+          const chat = snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setMessageDetails(chat);
+        }
+      ),
+    [firestore]
+  );
 
   useEffect(() => {
     setTimeout(() => {

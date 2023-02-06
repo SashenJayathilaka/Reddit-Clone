@@ -1,28 +1,22 @@
 import { Box } from "@chakra-ui/react";
 
 import { Community } from "../../atoms/CommunitiesAtom";
-import { MessageBody } from "../Feed/Messages";
 import ConversationItem from "./ConversationItem";
 
 type Props = {
   chatUsers: Community[];
-  lastSeenMessage: MessageBody[];
 };
 
-function ConversationsList({ chatUsers, lastSeenMessage }: Props) {
+function ConversationsList({ chatUsers }: Props) {
   return (
     <Box
       width={{ base: "100%", md: "400px" }}
       position="relative"
       height="100%"
-      overflow="scroll"
+      overflow="hidden"
     >
       {chatUsers.map((user) => (
-        <ConversationItem
-          key={user.id}
-          user={user}
-          lastSeenMessage={lastSeenMessage}
-        />
+        <ConversationItem key={user.id} user={user} />
       ))}
     </Box>
   );

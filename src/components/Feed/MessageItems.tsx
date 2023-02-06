@@ -28,7 +28,7 @@ function MessageItems({ message, userId }: Props) {
   });
 
   const textBg = useColorModeValue("gray.500", "whiteAlpha.700");
-  const bg = useColorModeValue("gray.300", "whiteAlpha.100");
+  const bg = useColorModeValue("gray.300", "whiteAlpha.300");
   const secondBg = useColorModeValue("gray.100", "#006AFF");
 
   useEffect(() => {
