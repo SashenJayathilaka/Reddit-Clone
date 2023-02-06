@@ -13,7 +13,7 @@ function ConversationsList({ chatUsers }: Props) {
       width={{ base: "100%", md: "400px" }}
       position="relative"
       height="100%"
-      overflow="hidden"
+      overflow="scroll"
     >
       {chatUsers.map((user) => (
         <ConversationItem key={user.id} user={user} />
