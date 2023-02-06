@@ -78,7 +78,7 @@ function ConversationItem({ user }: Props) {
           setLastSeenMessages(chat);
         }
       ),
-    [firestore]
+    [firestore, userCommunities?.id]
   );
 
   useEffect(() => {
