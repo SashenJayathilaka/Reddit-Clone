@@ -1,4 +1,5 @@
 import { Flex, Stack } from "@chakra-ui/react";
+import { User } from "firebase/auth";
 import {
   collection,
   onSnapshot,
@@ -7,9 +8,8 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
-import { auth, firestore } from "../../firebase/clientApp";
+import { firestore } from "../../firebase/clientApp";
 import SkeletonLoader from "../common/SkeletonLoader";
 import MessageItems from "./MessageItems";
 
@@ -26,10 +26,10 @@ export interface MessageBody {
 
 type Props = {
   conversationId: string;
+  user: User;
 };
 
-function Messages({ conversationId }: Props) {
-  const [user] = useAuthState(auth);
+function Messages({ conversationId, user }: Props) {
   const [messageDetails, setMessageDetails] = useState<MessageBody[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 

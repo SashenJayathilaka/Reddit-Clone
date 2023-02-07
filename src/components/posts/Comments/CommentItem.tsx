@@ -1,9 +1,16 @@
-import { Box, Flex, Icon, Spinner, Stack, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Flex,
+  Icon,
+  Spinner,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import CryptoJS from "crypto-js";
 import { Timestamp } from "firebase/firestore";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { FaReddit } from "react-icons/fa";
 import {
   IoArrowDownCircleOutline,
   IoArrowUpCircleOutline,
@@ -66,7 +73,11 @@ const CommentItem: React.FC<CommentItemProps> = ({
   return (
     <Flex>
       <Box mr={2}>
-        <Icon as={FaReddit} fontSize={30} color="gray.300" />
+        <Avatar
+          src={comment.creatorPhotoURL}
+          size="sm"
+          name={decryptedData.creatorDisplayText}
+        />
       </Box>
       <Stack spacing={1}>
         <Stack direction="row" align="center" fontSize="8px">

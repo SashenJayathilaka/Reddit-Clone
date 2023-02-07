@@ -12,6 +12,7 @@ import { User } from "firebase/auth";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   increment,
   orderBy,
@@ -28,6 +29,15 @@ import { Post, postState } from "../../../atoms/PostAtom";
 import { firestore } from "../../../firebase/clientApp";
 import CommentInput from "./CommentInput";
 import CommentItem, { Comment } from "./CommentItem";
+
+interface RedditUserDocument {
+  userId?: string;
+  userName: string;
+  userEmail?: string;
+  userImage: string;
+  redditImage: string;
+  timestamp: Timestamp;
+}
 
 type CommentsProps = {
   user: User;
@@ -46,11 +56,27 @@ const Comments: React.FC<CommentsProps> = ({
   const [loadingDeleteId, setLoadingDeleteId] = useState("");
   const [fetchLoading, setFetchLoading] = useState(true);
   const [createLoading, setCreateLoading] = useState(false);
+  const [redditUser, setRedditUser] = useState<RedditUserDocument>();
   const setPostState = useSetRecoilState(postState);
   const bg = useColorModeValue("white", "#1A202C");
   const lineBorderColor = useColorModeValue("gray.100", "#171923");
 
   //console.log(comments);
+
+  const fetchRedditUser = async (userId: any) => {
+    if (!userId) return;
+
+    try {
+      const docRef = doc(firestore, "redditUser", userId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setRedditUser(docSnap.data() as RedditUserDocument);
+      } else return;
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
   const onCreateComments = async () => {
     try {
@@ -71,7 +97,7 @@ const Comments: React.FC<CommentsProps> = ({
         id: commentDocRef.id,
         creatorId: user.uid,
         creatorDisplayText: dataName,
-        creatorPhotoURL: user.photoURL!,
+        creatorPhotoURL: redditUser?.redditImage!,
         communityId,
         postId: selectedPost?.id!,
         postTitle: selectedPost?.title!,
@@ -174,6 +200,10 @@ const Comments: React.FC<CommentsProps> = ({
       console.log(error);
     }
   }, [commentText]);
+
+  useEffect(() => {
+    fetchRedditUser(user?.uid);
+  }, [user]);
 
   return (
     <Box bg={bg} borderRadius="0px 0px 4px 4px" p={2}>
