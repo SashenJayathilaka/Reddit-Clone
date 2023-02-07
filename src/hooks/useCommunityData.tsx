@@ -4,10 +4,12 @@ import {
   getDoc,
   getDocs,
   increment,
+  serverTimestamp,
+  Timestamp,
   writeBatch,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authModelState } from "../atoms/authModalAtom";
@@ -108,6 +110,7 @@ const useCommunityData = () => {
         communityId: communityData.id,
         imageURL: communityData.imageURL || "",
         isModerator: user?.uid === communityData.creatorId,
+        updateTimeStamp: serverTimestamp() as Timestamp,
       };
 
       batch.set(

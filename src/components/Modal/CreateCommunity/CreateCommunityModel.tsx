@@ -18,16 +18,16 @@ import {
 } from "@chakra-ui/react";
 import {
   doc,
-  getDoc,
   runTransaction,
   serverTimestamp,
-  setDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { BsFillEyeFill, BsFillPersonFill } from "react-icons/bs";
 import { HiLockClosed } from "react-icons/hi";
+
 import { auth, firestore } from "../../../firebase/clientApp";
 import useDirectory from "../../../hooks/useDirectory";
 
@@ -106,6 +106,7 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
           {
             communityId: CommunitiesName,
             isModerator: true,
+            updateTimeStamp: serverTimestamp() as Timestamp,
           }
         );
       });

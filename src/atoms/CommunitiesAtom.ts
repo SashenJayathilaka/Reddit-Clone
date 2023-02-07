@@ -14,6 +14,7 @@ export interface CommunitySnippet {
   communityId: string;
   isModerator?: boolean;
   imageURL?: string;
+  updateTimeStamp?: Timestamp;
 }
 
 interface CommunityState {
