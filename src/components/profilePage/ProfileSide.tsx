@@ -3,11 +3,14 @@ import {
   Button,
   Flex,
   Icon,
+  Image,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { doc, getDoc, Timestamp } from "firebase/firestore";
 import moment from "moment";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaRedditAlien, FaUserCheck } from "react-icons/fa";
 import { GiCakeSlice, GiCheckedShield } from "react-icons/gi";
@@ -16,17 +19,42 @@ import { MdVerified } from "react-icons/md";
 import { useSetRecoilState } from "recoil";
 
 import { authModelState } from "../../atoms/authModalAtom";
-import { auth } from "../../firebase/clientApp";
+import { auth, firestore } from "../../firebase/clientApp";
 import useDirectory from "../../hooks/useDirectory";
+
+interface RedditUserDocument {
+  userId?: string;
+  userName: string;
+  userEmail?: string;
+  userImage: string;
+  redditImage: string;
+  timestamp: Timestamp;
+}
 
 type Props = {};
 
 function ProfileSide({}: Props) {
   const [user] = useAuthState(auth);
+  const [redditUser, setRedditUser] = useState<RedditUserDocument>();
   const { toggleMenuOpen } = useDirectory();
   const setAuthModelState = useSetRecoilState(authModelState);
   const bg = useColorModeValue("white", "#1A202C");
   const borderColor = useColorModeValue("gray.300", "#2D3748");
+
+  const fetchRedditUser = async (userId: any) => {
+    if (!userId) return;
+
+    try {
+      const docRef = doc(firestore, "redditUser", userId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setRedditUser(docSnap.data() as RedditUserDocument);
+      } else return;
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
   const onClick = () => {
     if (!user) {
@@ -36,6 +64,10 @@ function ProfileSide({}: Props) {
 
     toggleMenuOpen();
   };
+
+  useEffect(() => {
+    fetchRedditUser(user?.uid);
+  }, [user]);
 
   return (
     <Flex
@@ -61,13 +93,25 @@ function ProfileSide({}: Props) {
         url('https://source.unsplash.com/1600x900/?nature,photography,technolog')"
       ></Flex>
       <Flex justify="center">
-        <Avatar
-          src={user?.photoURL as string}
-          name={user?.displayName || (user?.email?.split("@")[0] as string)}
-          width="80px"
-          height="80px"
-          mt="-50px"
-        />
+        {redditUser?.redditImage ? (
+          <Image
+            src={redditUser?.redditImage}
+            rounded="md"
+            height="80px"
+            mt="-50px"
+            border="4px"
+            borderColor="#fff"
+          />
+        ) : (
+          <Avatar
+            src={redditUser?.redditImage}
+            name={user?.displayName || (user?.email?.split("@")[0] as string)}
+            width="80px"
+            height="80px"
+            mt="-50px"
+            rounded="md"
+          />
+        )}
       </Flex>
 
       <Flex
@@ -157,21 +201,25 @@ function ProfileSide({}: Props) {
             <Text fontWeight="bold" fontSize="10pt" textAlign="start">
               Cake Day
             </Text>
-            <Text
-              fontWeight="medium"
-              fontSize="9pt"
-              p="auto"
-              display="flex"
-              gap={1}
-            >
-              <Icon
-                as={GiCakeSlice}
-                color="blue.500"
-                textAlign="center"
-                m="auto"
-              />
-              {moment().format("MMMM Do, YYYY")}
-            </Text>
+            {redditUser?.timestamp && (
+              <Text
+                fontWeight="medium"
+                fontSize="9pt"
+                p="auto"
+                display="flex"
+                gap={1}
+              >
+                <Icon
+                  as={GiCakeSlice}
+                  color="blue.500"
+                  textAlign="center"
+                  m="auto"
+                />
+                {moment(new Date(redditUser?.timestamp?.seconds * 1000)).format(
+                  "MMMM Do, YYYY"
+                )}
+              </Text>
+            )}
           </Stack>
         </Stack>
       </Flex>

@@ -1,22 +1,19 @@
 import { Flex } from "@chakra-ui/react";
-import { Timestamp } from "firebase/firestore";
+import { User } from "firebase/auth";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
 
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import MessagesHeader from "./MessagesHeader";
 import NoConversationSelected from "./NoConversationSelected";
 
-type Props = {};
+type Props = {
+  user: User;
+  userInCommunities: string;
+  member: any;
+};
 
-function FeedWrapper({}: Props) {
-  const router = useRouter();
-  const {
-    query: { userInCommunities, member },
-  } = router;
-  const [timestamp, setTimestamp] = useState<Timestamp>();
-
+function FeedWrapper({ user, userInCommunities, member }: Props) {
   return (
     <Flex
       display={{ base: userInCommunities ? "flex" : "none", md: "flex" }}
@@ -35,12 +32,18 @@ function FeedWrapper({}: Props) {
               conversationId={userInCommunities.toString()}
               member={member?.toString()}
             />
-            <Messages conversationId={userInCommunities.toString()} />
+            <Messages
+              conversationId={userInCommunities.toString()}
+              user={user}
+            />
           </Flex>
-          <MessageInput conversationId={userInCommunities.toString()} />
+          <MessageInput
+            conversationId={userInCommunities.toString()}
+            user={user}
+          />
         </>
       ) : (
-        <NoConversationSelected />
+        <NoConversationSelected user={user} />
       )}
     </Flex>
   );

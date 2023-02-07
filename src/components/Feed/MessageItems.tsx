@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Flex,
+  Image,
   Stack,
   Text,
   useColorModeValue,
@@ -25,6 +26,7 @@ function MessageItems({ message, userId }: Props) {
     senderName: "",
     senderEmail: "",
     messageBody: "",
+    senderImageUrl: "",
   });
 
   const textBg = useColorModeValue("gray.500", "whiteAlpha.700");
@@ -38,6 +40,7 @@ function MessageItems({ message, userId }: Props) {
       message.senderName,
       message.senderEmail,
       message.messageBody,
+      message.senderImageUrl,
     ];
     const arrName = [
       "communityId",
@@ -45,6 +48,7 @@ function MessageItems({ message, userId }: Props) {
       "senderName",
       "senderEmail",
       "messageBody",
+      "senderImageUrl",
     ];
 
     try {
@@ -85,11 +89,26 @@ function MessageItems({ message, userId }: Props) {
           <>
             {decryptedData.senderId !== userId && (
               <Flex align="flex-end">
-                <Avatar
-                  name={decryptedData.senderName}
-                  size="sm"
-                  rounded="base"
-                />
+                {decryptedData.senderImageUrl ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                  >
+                    <Image
+                      src={decryptedData.senderImageUrl}
+                      height="34px"
+                      rounded="base"
+                    />
+                  </motion.div>
+                ) : (
+                  <Avatar
+                    name={decryptedData.senderName}
+                    src={decryptedData.senderImageUrl}
+                    size="sm"
+                    rounded="base"
+                  />
+                )}
               </Flex>
             )}
             <Stack spacing={1} width="100%">

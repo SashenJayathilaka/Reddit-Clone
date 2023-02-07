@@ -1,39 +1,66 @@
 import { Box, Input, useColorModeValue } from "@chakra-ui/react";
 import CryptoJS from "crypto-js";
+import { User } from "firebase/auth";
 import {
   addDoc,
   collection,
+  doc,
+  getDoc,
   serverTimestamp,
   Timestamp,
 } from "firebase/firestore";
-import React, { useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React, { useEffect, useState } from "react";
 
-import { auth, firestore } from "../../firebase/clientApp";
+import { firestore } from "../../firebase/clientApp";
 
 interface MessageBody {
   communityId: string;
   senderId: string;
-  senderImageUrl: string;
+  senderImageUrl?: string;
   senderName: string;
   senderEmail: any;
   messageBody: string;
   sendedAt: Timestamp;
 }
 
+interface RedditUserDocument {
+  userId?: string;
+  userName: string;
+  userEmail?: string;
+  userImage: string;
+  redditImage: string;
+  timestamp: Timestamp;
+}
+
 type Props = {
   conversationId: string;
+  user: User;
 };
 
-function MessageInput({ conversationId }: Props) {
-  const [user] = useAuthState(auth);
+function MessageInput({ conversationId, user }: Props) {
   const [messageBody, setMessageBody] = useState("");
+  const [redditUser, setRedditUser] = useState<RedditUserDocument>();
   const searchBg = useColorModeValue("gray.50", "whiteAlpha.50");
   const searchBorder = useColorModeValue("gray.200", "#4A5568");
 
+  const fetchRedditUser = async (userId: any) => {
+    if (!userId) return;
+
+    try {
+      const docRef = doc(firestore, "redditUser", userId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setRedditUser(docSnap.data() as RedditUserDocument);
+      } else return;
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
   const onSendMessage = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!user) return;
+    if (!user && !messageBody) return;
 
     const encryptedData = [];
 
@@ -43,9 +70,10 @@ function MessageInput({ conversationId }: Props) {
       user.email!.split("@")[0],
       user.email,
       messageBody,
+      redditUser?.redditImage,
     ];
 
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < 6; index++) {
       try {
         if (arrData[index]) {
           const data = CryptoJS.AES.encrypt(
@@ -64,7 +92,7 @@ function MessageInput({ conversationId }: Props) {
       const newMessageBody: MessageBody = {
         communityId: encryptedData[0],
         senderId: encryptedData[1],
-        senderImageUrl: user.photoURL || "",
+        senderImageUrl: encryptedData[5]!,
         senderName: encryptedData[2],
         senderEmail: encryptedData[3],
         messageBody: encryptedData[4],
@@ -81,6 +109,10 @@ function MessageInput({ conversationId }: Props) {
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    fetchRedditUser(user?.uid);
+  }, [user]);
 
   return (
     <Box px={4} py={6} width="100">

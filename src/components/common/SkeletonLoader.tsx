@@ -11,23 +11,21 @@ function SkeletonLoader({ count, height, width }: Props) {
   return (
     <>
       {[...Array(count)].map((_, i) => (
-        <>
+        <div key={i}>
           {width ? (
             <Skeleton
-              key={i}
               height={height}
               width={{ base: "full", md: width }}
               borderRadius={4}
             />
           ) : (
             <Skeleton
-              key={i}
               height={height}
               width={{ base: "full" }}
               borderRadius={4}
             />
           )}
-        </>
+        </div>
       ))}
     </>
   );
