@@ -6,7 +6,13 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { collection, getDocs, query, Timestamp } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  Timestamp,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -49,21 +55,21 @@ function ConversationsWrapper({}: Props) {
   const getChatUser = async (userId: any) => {
     if (userId) {
       try {
-        setLoading(true);
-
-        const chatUserQuery = query(
-          collection(firestore, `users/${userId}/communitySnippets`)
+        const chatUserQuery = onSnapshot(
+          query(
+            collection(firestore, `users/${userId}/communitySnippets`),
+            orderBy("updateTimeStamp", "desc")
+          ),
+          (snapshot) => {
+            const chat = snapshot.docs.map((doc: any) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setChatUser(chat);
+          }
         );
-        const chatUserDoc = await getDocs(chatUserQuery);
 
-        const chat = chatUserDoc.docs.map((doc: any) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        setChatUser(chat);
-
-        setLoading(false);
+        chatUserQuery;
       } catch (error: any) {
         console.log(error.message);
       }
@@ -73,6 +79,14 @@ function ConversationsWrapper({}: Props) {
   useEffect(() => {
     getChatUser(user?.uid);
   }, [user, firestore]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (user) {
+        setLoading(false);
+      }
+    }, 2000);
+  });
 
   return (
     <Box

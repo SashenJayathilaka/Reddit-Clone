@@ -8,6 +8,7 @@ import {
   getDoc,
   serverTimestamp,
   Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
@@ -105,6 +106,24 @@ function MessageInput({ conversationId, user }: Props) {
       );
 
       setMessageBody("");
+      updateConversation(user.uid, conversationId);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  const updateConversation = async (userId: string, communityId: string) => {
+    if (!userId && !communityId) return;
+
+    try {
+      const updateDocRef = doc(
+        firestore,
+        `users/${userId}/communitySnippets/${communityId}`
+      );
+
+      await updateDoc(updateDocRef, {
+        updateTimeStamp: serverTimestamp() as Timestamp,
+      });
     } catch (error: any) {
       console.log(error.message);
     }
