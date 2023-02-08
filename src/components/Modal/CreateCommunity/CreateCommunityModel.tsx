@@ -96,6 +96,9 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
           privacyTYpe: communityType,
         });
 
+        //update
+        updateCommunitySnippet(user?.uid!, transaction);
+
         // create
         transaction.set(
           doc(
@@ -123,6 +126,20 @@ const CreateCommunityModel: React.FC<CreateCommunityModelProps> = ({
 
     setLoading(false);
     //setError("")
+  };
+
+  const updateCommunitySnippet = async (userId: string, transaction: any) => {
+    if (!userId) return;
+
+    const communityUpdateDocRef = doc(
+      firestore,
+      `communities/${CommunitiesName}/userInCommunity/${userId}`
+    );
+
+    await transaction.set(communityUpdateDocRef, {
+      userId: userId,
+      userEmail: user?.email,
+    });
   };
 
   return (

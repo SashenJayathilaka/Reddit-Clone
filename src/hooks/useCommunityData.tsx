@@ -132,11 +132,42 @@ const useCommunityData = () => {
         ...prev,
         mySnippets: [...prev.mySnippets, newSnippet],
       }));
+
+      updateCommunitySnippet(communityData, user?.uid!);
     } catch (error: any) {
       console.log("JoinCommunity Error", error);
       setError(error.message);
     }
     setLoading(false);
+  };
+
+  const updateCommunitySnippet = async (
+    communityData: Community,
+    userId: string
+  ) => {
+    if (!communityData && !userId) return;
+
+    try {
+      const batch = writeBatch(firestore);
+
+      const newSnippet = {
+        userId: userId,
+        userEmail: user?.email,
+      };
+
+      batch.set(
+        doc(
+          firestore,
+          `communities/${communityData.id}/userInCommunity/${userId}`
+        ),
+        newSnippet
+      );
+
+      await batch.commit();
+    } catch (error: any) {
+      console.log("JoinCommunity Error", error);
+      setError(error.message);
+    }
   };
 
   const leaveCommunity = async (communityId: string) => {

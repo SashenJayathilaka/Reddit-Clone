@@ -7,7 +7,6 @@ import {
   doc,
   getDoc,
   onSnapshot,
-  orderBy,
   query,
   serverTimestamp,
   Timestamp,
@@ -63,19 +62,21 @@ function MessageInput({ conversationId, user }: Props) {
     }
   };
 
-  const fetchAllUser = () => {
+  const fetchAllUser = (CommunitiesName: string) => {
     try {
       const fetchQuery = onSnapshot(
         query(
-          collection(firestore, `communities/${conversationId}/conversation`),
-          orderBy("sendedAt", "desc")
+          collection(
+            firestore,
+            `communities/${CommunitiesName}/userInCommunity`
+          )
         ),
         (snapshot) => {
           const chat = snapshot.docs.map((doc: any) => ({
             id: doc.id,
             ...doc.data(),
           }));
-          const filterUser = chat.map((doc) => doc.senderId);
+          const filterUser = chat.map((doc) => doc.userId);
 
           let uniqueChars = filterUser.filter((c, index) => {
             return filterUser.indexOf(c) === index;
@@ -167,7 +168,7 @@ function MessageInput({ conversationId, user }: Props) {
   }, [user]);
 
   useEffect(() => {
-    fetchAllUser();
+    fetchAllUser(conversationId);
   }, [firestore, conversationId]);
 
   return (
