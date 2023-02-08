@@ -6,6 +6,9 @@ import {
   collection,
   doc,
   getDoc,
+  onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
   Timestamp,
   updateDoc,
@@ -41,6 +44,7 @@ type Props = {
 function MessageInput({ conversationId, user }: Props) {
   const [messageBody, setMessageBody] = useState("");
   const [redditUser, setRedditUser] = useState<RedditUserDocument>();
+  const [lastSeenMessages, setLastSeenMessages] = useState<any[]>([]);
   const searchBg = useColorModeValue("gray.50", "whiteAlpha.50");
   const searchBorder = useColorModeValue("gray.200", "#4A5568");
 
@@ -59,22 +63,47 @@ function MessageInput({ conversationId, user }: Props) {
     }
   };
 
+  const fetchAllUser = () => {
+    try {
+      const fetchQuery = onSnapshot(
+        query(
+          collection(firestore, `communities/${conversationId}/conversation`),
+          orderBy("sendedAt", "desc")
+        ),
+        (snapshot) => {
+          const chat = snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          const filterUser = chat.map((doc) => doc.senderId);
+
+          let uniqueChars = filterUser.filter((c, index) => {
+            return filterUser.indexOf(c) === index;
+          });
+
+          setLastSeenMessages(uniqueChars);
+        }
+      );
+
+      fetchQuery;
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
   const onSendMessage = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!user && !messageBody) return;
-
     const encryptedData = [];
 
     const arrData = [
-      conversationId as string,
-      user.uid,
       user.email!.split("@")[0],
       user.email,
       messageBody,
       redditUser?.redditImage,
     ];
 
-    for (let index = 0; index < 6; index++) {
+    for (let index = 0; index < arrData.length; index++) {
       try {
         if (arrData[index]) {
           const data = CryptoJS.AES.encrypt(
@@ -91,12 +120,12 @@ function MessageInput({ conversationId, user }: Props) {
 
     try {
       const newMessageBody: MessageBody = {
-        communityId: encryptedData[0],
-        senderId: encryptedData[1],
-        senderImageUrl: encryptedData[5]!,
-        senderName: encryptedData[2],
-        senderEmail: encryptedData[3],
-        messageBody: encryptedData[4],
+        communityId: conversationId as string,
+        senderId: user.uid,
+        senderImageUrl: encryptedData[3]!,
+        senderName: encryptedData[0],
+        senderEmail: encryptedData[1],
+        messageBody: encryptedData[2],
         sendedAt: serverTimestamp() as Timestamp,
       };
 
@@ -106,7 +135,11 @@ function MessageInput({ conversationId, user }: Props) {
       );
 
       setMessageBody("");
-      updateConversation(user.uid, conversationId);
+
+      for (let index = 0; index < lastSeenMessages.length; index++) {
+        updateConversation(lastSeenMessages[index], conversationId);
+      }
+      setLastSeenMessages([]);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -132,6 +165,10 @@ function MessageInput({ conversationId, user }: Props) {
   useEffect(() => {
     fetchRedditUser(user?.uid);
   }, [user]);
+
+  useEffect(() => {
+    fetchAllUser();
+  }, [firestore, conversationId]);
 
   return (
     <Box px={4} py={6} width="100">

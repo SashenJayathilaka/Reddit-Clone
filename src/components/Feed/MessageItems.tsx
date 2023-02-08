@@ -21,8 +21,6 @@ type Props = {
 
 function MessageItems({ message, userId }: Props) {
   const [decryptedData, setDecryptedData] = useState({
-    communityId: "",
-    senderId: "",
     senderName: "",
     senderEmail: "",
     messageBody: "",
@@ -35,16 +33,12 @@ function MessageItems({ message, userId }: Props) {
 
   useEffect(() => {
     const arr = [
-      message.communityId,
-      message.senderId,
       message.senderName,
       message.senderEmail,
       message.messageBody,
       message.senderImageUrl,
     ];
     const arrName = [
-      "communityId",
-      "senderId",
       "senderName",
       "senderEmail",
       "messageBody",
@@ -82,12 +76,12 @@ function MessageItems({ message, userId }: Props) {
         p={4}
         spacing={4}
         _hover={{ bg: "whiteAlpha.20" }}
-        justify={decryptedData.senderId === userId ? "flex-end" : "flex-start"}
+        justify={message.senderId === userId ? "flex-end" : "flex-start"}
         wordBreak="break-word"
       >
-        {decryptedData.senderId && (
+        {message.senderId && (
           <>
-            {decryptedData.senderId !== userId && (
+            {message.senderId !== userId && (
               <Flex align="flex-end">
                 {decryptedData.senderImageUrl ? (
                   <motion.div
@@ -116,11 +110,11 @@ function MessageItems({ message, userId }: Props) {
                 direction="row"
                 align="center"
                 justify={
-                  decryptedData.senderId === userId ? "flex-end" : "flex-start"
+                  message.senderId === userId ? "flex-end" : "flex-start"
                 }
               >
                 !
-                {decryptedData.senderId !== userId && (
+                {message.senderId !== userId && (
                   <Text fontWeight={500} textAlign="left" fontSize={12}>
                     {decryptedData.senderName}
                   </Text>
@@ -131,10 +125,10 @@ function MessageItems({ message, userId }: Props) {
               </Stack>
               <Flex
                 justify={
-                  decryptedData.senderId === userId ? "flex-end" : "flex-start"
+                  message.senderId === userId ? "flex-end" : "flex-start"
                 }
               >
-                {decryptedData.senderId === userId ? (
+                {message.senderId === userId ? (
                   <Box
                     bg={secondBg}
                     px={2}
