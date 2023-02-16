@@ -173,6 +173,8 @@ To run this project, you will need to add the following environment variables to
 
 `NEXT_PUBLIC_BASE_URL`
 
+`NEXT_PUBLIC_CRYPTO_SECRET_PASS`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### :gear: Installation
