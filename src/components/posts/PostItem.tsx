@@ -116,7 +116,7 @@ const PostItem: React.FC<PostItemProps> = ({
             ...prev,
             [arrName[index]]: data,
           }));
-        } else return;
+        } else continue;
       }
     } catch (error) {
       console.log(error);
