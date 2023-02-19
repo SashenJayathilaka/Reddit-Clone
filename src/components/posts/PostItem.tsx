@@ -100,8 +100,16 @@ const PostItem: React.FC<PostItemProps> = ({
   };
 
   useEffect(() => {
-    const arr = [post.title, post.body, post.creatorDisplayName, post.imageURL];
-    const arrName = ["title", "body", "creatorDisplayName", "imageURL"];
+    const arr = [];
+    const arrName: string[] = [];
+
+    if (post.body) {
+      arr.push(post.title, post.body, post.creatorDisplayName, post.imageURL);
+      arrName.push("title", "body", "creatorDisplayName", "imageURL");
+    } else {
+      arr.push(post.title, post.creatorDisplayName, post.imageURL);
+      arrName.push("title", "creatorDisplayName", "imageURL");
+    }
 
     try {
       for (let index = 0; index < arr.length; index++) {
