@@ -1,10 +1,5 @@
-import {
-  Flex,
-  Icon,
-  keyframes,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import React from "react";
