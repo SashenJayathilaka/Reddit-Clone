@@ -27,6 +27,7 @@ import { firestore, storage } from "../../firebase/clientApp";
 import useSelectFile from "../../hooks/useSelectFile";
 import ImageUpload from "./postsForm/ImageUpload";
 import TextInput from "./postsForm/TextInput";
+//@ts-ignore
 import TabItem from "./TabItem";
 
 // const secretPass = process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS;
